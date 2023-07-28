@@ -1,0 +1,53 @@
+/* App.css */
+
+/* Styling for the container of each video */
+.video-container {
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Styling for the video title */
+.video-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Styling for the video player */
+.video-player {
+    width: 100%;
+    max-width: 640px;
+    height: 360px;
+    border: none;
+}
+
+/* Center the video player */
+.video-player-container {
+    display: flex;
+    justify-content: center;
+}
+
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.playlist-button{
+    background:#4240c2 ;
+    display: flex;
+    color: white;
+    border-radius: 6px;
+    padding: 10px;
+    border-style: none;
+    margin-right: 1rem;
+    cursor: pointer;
+    transition:.3s ease all;
+    
+    
+}

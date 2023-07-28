@@ -1,0 +1,43 @@
+/* Add your existing CSS styles here */
+
+.course-container {
+  margin-top: 20px;
+}
+
+.courselist {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.user-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.search-container {
+  display: flex;
+  width: 100%;
+}
+
+.usersearchbar {
+  display: flex;
+  justify-content: flex-end;
+  align-content: flex-end;
+}

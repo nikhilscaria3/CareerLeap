@@ -1,0 +1,81 @@
+/* App.css */
+.brotoplaylistname{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    
+}
+/* Styling for the container of each video */
+.video-container {
+    margin-bottom: 30px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Styling for the video title */
+.video-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Styling for the video player */
+.video-player {
+    width: 100%;
+    max-width: 640px;
+    height: 360px;
+    border: none;
+}
+
+/* Center the video player */
+.video-player-container {
+    display: flex;
+    justify-content: center;
+}
+
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.brotocoursecategory {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow buttons to wrap to a new line if they exceed container width */
+    justify-content: flex-start; /* Align buttons to the left */
+    margin-bottom: 20px;
+  }
+  
+  .playlist-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .playlist-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .playlist-button:hover {
+    background-color: #0056b3;
+  }
+
+.brotocoursecategory {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.playlistnav{
+    display: flex;
+    flex-wrap: wrap;
+
+}

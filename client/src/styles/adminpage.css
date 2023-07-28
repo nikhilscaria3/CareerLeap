@@ -1,0 +1,153 @@
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.form button:hover {
+    background-color: #0056b3;
+}
+
+.form button:focus {
+    outline: none;
+}
+
+/* Optional: Add some responsive styles for better user experience on smaller screens */
+@media (max-width: 480px) {
+    .form-container {
+        max-width: 100%;
+    }
+}
+
+
+.course-container {
+    margin-top: 20px;
+}
+
+.courselist,
+.coursedescription,
+.coursename {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.courseprice {
+    font-family: 'Times New Roman', Times, serif;
+}
+
+input {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    width: 300px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.buttons-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.deletebutton,
+.updatebutton {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deletebutton {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.deletebutton:hover {
+    background-color: #dd2915;
+    color: #fff;
+}
+
+.updatebutton {
+    background-color: #3498db;
+    color: #fff;
+}
+
+.updatebutton:hover {
+    background-color: #0790eb;
+    color: #fff;
+}
+
+.navbar {
+    display: flex;
+    background-color: #f0f0f0;
+    width: 100%;
+}
+
+.navbrand {
+    display: flex;
+    align-items: center;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    justify-content: center;
+}
+
+
+.adminlogout {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    margin: auto;
+    background-color: #dd2915;
+    color: #ccc;
+    border-radius: 4px;
+    border-style: none;
+}
+
+.adminlogout:hover {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #ed240e;
+    transform: scale(1.01);
+    color: #ccc;
+    border-radius: 4px;
+    border-style: none;
+}

@@ -1,0 +1,32 @@
+AIzaSyCWCKu2TLYdXnMlNf0LsbsJfhXtEXenEhM
+
+
+PLQzJEzrRmXOUyNzyvdf7VjwJzyF86yCGK
+
+PL1JrLEBAapUVvE-oCkKD5QhGG8nb0hhZk
+
+
+Technical Workouts
+  
+1.  Learn the concepts of ReactJS.
+a.useCallback
+b.useMemo
+c.React.memo vs useMemo
+d.useContext and context API
+e.useReducer
+f.React.lazy – code splitting
+  2.  Design Netflix, OLX. (with useContext API)
+
+
+Technical Workouts
+1. Learn Javascript & Bootstrap by the end of this week.
+2. Design a public website using HTML, CSS, javascript, and bootstrap. Website must be completely responsive.
+3. Complete a good personal website using a template. The website should meet the following criteria:
+a. Should be responsive 
+b. Should contain at least six pages
+c. Should not contain any dummy content or images
+d. Enquiry form with validation and submission 
+e. Social media links with proper contact details
+4. Read the document below and check the performance of your website. Improve your website until you acquire a score above 90.
+              https://developers.google.com/web/tools/lighthouse#devtools
+

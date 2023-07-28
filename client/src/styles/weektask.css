@@ -1,0 +1,83 @@
+/* Styles for the weektaskcontainer */
+.weektaskcontainer {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Styles for the heading */
+.weektaskcontainer h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #007bff;
+}
+
+/* Styles for the weekbuttons */
+.weekbuttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Styles for the individual buttons */
+.weekbuttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.weekbuttons button:hover {
+  background-color: #0056b3;
+  transform: scale(1.01);
+  
+}
+
+/* Center the weekbuttons within the container */
+@media (max-width: 768px) {
+  .weekbuttons {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+button.disabled-button {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.circularimage
+{
+  width: 100%;
+  height: auto;
+  margin-top: 10px;
+
+}
+
+.circularbutton{
+  align-items: center;
+  margin: auto;
+  display: flex;
+}
+
+.lock-icon {
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  pointer-events: none;
+  /* This prevents the lock icon from capturing click events */
+
+}
+
+.renderedDescription{
+  overflow: scroll;
+  max-height: 600px;
+}

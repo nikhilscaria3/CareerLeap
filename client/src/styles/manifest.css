@@ -1,0 +1,133 @@
+/* Add your existing CSS styles here */
+.navbrand {
+  font-size: 24px;
+}
+
+.manifestform-container {
+  width: 900px;
+  background-color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  margin: auto;
+
+}
+
+.form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.form input,
+.form textarea {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #d6d2d2;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form input[type="submit"] {
+  grid-column: 1 / span 2;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.manifestemaildiv {
+  align-items: center;
+  margin: auto;
+  justify-content: center;
+  display: flex;
+  padding: 10px;
+}
+
+.manifestitemweek{
+  border-color: #000000;
+  border-style: groove;
+}
+
+.course-container {
+  margin-top: 20px;
+}
+
+.courselist {
+  font-size: 24px;
+  font-weight: bold;
+}
+.currentweek
+{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.user-table th,
+.user-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.user-table tr:hover {
+  background-color: #f9f9f9;
+}
+
+.card p {
+  color: #000000;
+}
+
+.taskformcontainer {
+  display: flex;
+  flex: auto;
+
+}
+
+/* taskmode.css */
+.taskmode button {
+  display: flex;
+  margin: 1px 1px 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.taskmode button:first-child {
+  background-color: green;
+}
+
+.taskmode button:nth-child(2) {
+  background-color: yellow;
+}
+
+.taskmode button:nth-child(3) {
+  background-color: orange;
+}
+
+.taskmode button:nth-child(4) {
+  background-color: red;
+}
+
+.taskmode button:nth-child(5) {
+  background-color: skyblue;
+}
+
+.cards-container{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
