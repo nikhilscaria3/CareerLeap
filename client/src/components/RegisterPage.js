@@ -3,8 +3,9 @@ import '../styles/registerpage.css';
 import { Link } from "react-router-dom";
 import { registerUser } from "../actions/userAction";
 import { useDispatch, useSelector } from "react-redux";
-
-
+import careerleaplogo from '../views/careerleaplogo2.png';
+import { useGoogleLogin } from '@react-oauth/google';
+import axios from 'axios'
 
 
 export function RegisterPage() {
@@ -12,6 +13,7 @@ export function RegisterPage() {
     const initialErrors = {
         email: { required: false },
         password: { required: false },
+        confirmpassword: { required: false },
         name: { required: false },
         custom_error: null,
     };
@@ -19,14 +21,17 @@ export function RegisterPage() {
     const [initialdata] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        confirmpassword: ""
     })
 
     const [errors, setErrors] = useState(initialErrors);
+  
     const [inputs, setFormData] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "",
+        confirmpassword: ""
     })
 
     const [message, setMessage] = useState(null)
@@ -34,7 +39,7 @@ export function RegisterPage() {
     const user = useSelector((state) => state.user.user);
     const error = useSelector((state) => state.user.error);
 
-   
+
     useEffect(() => {
         if (message) {
             // Only set a timeout if the message is not empty
@@ -70,6 +75,10 @@ export function RegisterPage() {
             formErrors.password.required = true;
             hasError = true;
         }
+        if (inputs.password!== inputs.confirmpassword) {
+            formErrors.password.required = true;
+            hasError = true;
+        }
 
         if (!hasError) {
 
@@ -84,6 +93,7 @@ export function RegisterPage() {
                 // setMessage("Registered Successfully!")
             } catch (error) {
                 // Handle registration error
+                setFormData({ initialdata }); // Update this line
                 setMessage(errormessage)
                 console.error('Registration Error:', error);
             }
@@ -92,14 +102,46 @@ export function RegisterPage() {
         setErrors(formErrors);
     };
 
+
+    async function handleGoogleLoginSuccess(tokenResponse) {
+        const accessToken = tokenResponse.access_token;
+        console.log(accessToken);
+
+        try {
+            const response = await fetch("http://localhost:5000/GoogleRegister", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ accessToken })
+            });
+
+            if (response.ok) {
+             
+            } else {
+                console.log('Request failed:', response.statusText);
+            }
+        } catch (err) {
+            console.log('Error:', err);
+        }
+    }
+
+
+    const login = useGoogleLogin({ onSuccess: handleGoogleLoginSuccess });
+
+
+
+
     return (
+        
         <section className="register-block" >
             <div className="container">
                 <div className="row ">
                     <div className="col register-sec">
+                        <img className="form-register-logo" src={careerleaplogo} alt="Form Logo" />
                         <h2 className="text-center">Register Now</h2>
-                        <form onSubmit={handleSubmit} className="register-form" action="" >
-                            <div className="form-group">
+                        <form className="register-form" action="" >
+                            <div className="inputContainer">
                                 <label htmlFor="exampleInputEmail1" className="text-uppercase">Name</label>
 
                                 <input type="text" className="form-control" name="name" onChange={handleinputs} id="name" />
@@ -107,7 +149,7 @@ export function RegisterPage() {
                                     Name is required.
                                 </span>) : null}
                             </div>
-                            <div className="form-group">
+                            <div className="inputContainer">
                                 <label htmlFor="exampleInputEmail1" className="text-uppercase">Email</label>
 
                                 <input type="text" className="form-control" onChange={handleinputs} name="email" id="email" />
@@ -115,24 +157,39 @@ export function RegisterPage() {
                                     Email is required.
                                 </span>) : null}
                             </div>
-                            <div className="form-group">
+                            <div className="inputContainer">
                                 <label htmlFor="exampleInputPassword1" className="text-uppercase">Password</label>
                                 <input className="form-control" type="password" onChange={handleinputs} name="password" id="password" />
                                 {errors.password.required ? (<span className="text-danger" >
                                     Password is required.
                                 </span>) : null}
                             </div>
-                            <div className="form-group">
-                                <input type="submit" className="btn btn-login float-right" value="Register" />
+                            <div className="inputContainer">
+                                <label htmlFor="exampleInputPassword1" className="text-uppercase">Confirm Password</label>
+                                <input className="form-control" type="password" onChange={handleinputs} name="confirmpassword" id="confirmpassword" />
+                                {errors.password.required ? (<span className="text-danger" >
+                                    Password is not match.
+                                </span>) : null}
                             </div>
-                            <div className="clearfix"></div>
-                            <div className="form-group">
-                                Already have account ? Please <Link to="/login">Login </Link>
+
+                            <div className="footerContainer">
+                                <div>
+                                    Already Signed Up? <Link to="/login">Login</Link>
+                                </div>
+                                <div>
+                                    <Link to="/userforgotpassword">Forgot Password?</Link>
+                                </div>
                             </div>
 
 
                         </form>
 
+                        <div className="form-group">
+                            <button onClick={handleSubmit} className="loginBTN">REGISTER</button>
+                            <span className="or">or</span>
+                            <button onClick={() => login()} className="googleBTN">
+                                <i class="fa-brands fa-google"></i>  Sign up with google</button>
+                        </div>
                         <div  >
 
                             {message && (

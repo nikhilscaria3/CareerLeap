@@ -1,0 +1,67 @@
+/* jscompiler.css */
+
+/* Style for the main container */
+.js-compiler-container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Style for the code editor container (left half) */
+.code-editor-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-right: 1px solid #ccc;
+  overflow: hidden;
+}
+
+/* Style for the code editor header */
+.code-editor-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the textarea */
+textarea {
+  width: 100%;
+  height: 450px;
+  resize: none;
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* Style for the "Run Code" button */
+.code-editor button {
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Style for the output container (right half) */
+.output-container {
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+/* Style for the output header */
+.output-header {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the output text */
+.output pre {
+  white-space: pre-wrap;
+}

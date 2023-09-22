@@ -1,4 +1,7 @@
 // redux/actions.js
+import { setLoggedInEmailInCookie } from '../cookieUtils'; // Adjust the import path according to your folder structure
+import api from '../utils/api'
+
 // Action type constants
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_ERROR = 'REGISTER_ERROR';
@@ -45,37 +48,20 @@ export const LoginUser = (userData,) => {
             console.log("email"
                 , loginUser.data);
 
-            console.log(loginUser.token);
+            console.log(loginUser.message);
+            // If the response status is 200, the user is successfully logged in
+            dispatch({ type: LOGIN_SUCCESS, payload: loginUser, message: loginUser.message });
 
-            if (response.ok && loginUser.success) {
-                // If the response status is 200, the user is successfully logged in
-                dispatch({ type: LOGIN_SUCCESS, payload: loginUser, message: loginUser.message });
-                const { token } = loginUser;
-                // Store the token in localStorage
-                const loginUserData = loginUser.data; // Replace this with your actual data
+            return loginUser; // Return the loginUser data after successful login
 
-                // Step 1: Concatenate the current timestamp and the loginUserData
-                const timestamp = Date.now();
-                const emailIdWithTimestamp = timestamp + loginUserData;
-
-                // Step 2: Encode the combined data using Base64
-                const encodedData = btoa(emailIdWithTimestamp);
-
-                const expiration = Date.now() + 3 * 60 * 60 * 1000;
-                localStorage.setItem('jwtLoginToken', JSON.stringify({ token, expiration }));
-                localStorage.setItem("randomsession", encodedData)
-                return loginUser; // Return the loginUser data after successful login
-            } else {
-                // If the response status is not 200, there was an error during login
-                dispatch({ type: LOGIN_ERROR, payload: loginUser.error });
-                throw new Error(loginUser.error); // Throw an error for handling login failure
-            }
         } catch (error) {
             // Handle login error, if any
-            dispatch({ type: LOGIN_ERROR, payload: 'Failed to login user' });
+            dispatch({ type: LOGIN_ERROR, payload: 'Failed to Login -  Check Password or Email' });
+
         }
     };
 };
+
 
 export const ADMINLOGIN_SUCCESS = 'ADMINLOGIN_SUCCESS';
 export const ADMINLOGIN_ERROR = 'ADMINLOGIN_ERROR';
@@ -98,8 +84,9 @@ export const AdminLoginUser = (userData,) => {
 
             if (response.ok) {
                 // If the response status is 200, the user is successfully logged in
-                dispatch({ type: ADMINLOGIN_SUCCESS, payload: adminloginuser, message: adminloginuser.message });
-                const { token } = adminloginuser;
+                dispatch({ type: ADMINLOGIN_SUCCESS, payload: adminloginuser, message: adminloginuser.message, adminemail: adminloginuser.data });
+                const { token, data } = adminloginuser;
+                setLoggedInEmailInCookie(data)
                 // Store the token in localStorage
                 const expiration = Date.now() + 3 * 60 * 60 * 1000;
                 localStorage.setItem('jwtAdminToken', JSON.stringify({ token, expiration }));
@@ -152,8 +139,8 @@ export const profileImage = (imageData) => {
 
 
 
-export const COURSE_SUCCESS = 'PROFILE_SUCCESS';
-export const COURSE_ERROR = 'PROFILE_ERROR';
+export const COURSE_SUCCESS = 'COURSE_SUCCESS';
+export const COURSE_ERROR = 'COURSE_ERROR';
 
 export const addCourseData = (coursedata) => {
     return async (dispatch) => {

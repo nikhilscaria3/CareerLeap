@@ -27,7 +27,6 @@
 
 /* Styles for the individual buttons */
 .weekbuttons button {
-  padding: 10px 20px;
   font-size: 16px;
   border: none;
   background-color: #007bff;
@@ -53,6 +52,9 @@
 button.disabled-button {
   background-color: #ccc;
   cursor: not-allowed;
+  color: #fff;
+  border-radius: 5px;
+ 
 }
 
 .circularimage

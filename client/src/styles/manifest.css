@@ -4,12 +4,42 @@
 }
 
 .manifestform-container {
-  width: 900px;
+  width: 1200px;
   background-color: #fff;
   padding: 20px;
   margin-top: 20px;
   margin: auto;
 
+}
+
+
+.manifestcards-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.manifestcard img {
+  width: 100%;
+  height: 200px;
+  margin: auto;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.manifestcard {
+  background-color: #fff;
+  box-shadow: 3px 13px 15px 3px rgb(73, 73, 76);
+  border-radius: 4px;
+  padding: 15px;
+  margin: 12px;
+  width: 300px;
+}
+
+.manifestcard:hover {
+  cursor: pointer;
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(121, 120, 120, 0.25),
+              -5px -5px 30px 15px rgba(231, 226, 226, 0.22);
 }
 
 .form {
@@ -44,21 +74,18 @@
   padding: 10px;
 }
 
-.manifestitemweek{
+.manifestitemweek {
   border-color: #000000;
   border-style: groove;
 }
 
-.course-container {
-  margin-top: 20px;
-}
 
 .courselist {
   font-size: 24px;
   font-weight: bold;
 }
-.currentweek
-{
+
+.currentweek {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   padding: 5px;
   margin-bottom: 10px;
@@ -86,7 +113,7 @@
   background-color: #f9f9f9;
 }
 
-.card p {
+.manifestcard p {
   color: #000000;
 }
 
@@ -128,6 +155,10 @@
   background-color: skyblue;
 }
 
-.cards-container{
+.manifestcards-container {
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.manifestbuttoncontainer {
+  color: #000000;
 }

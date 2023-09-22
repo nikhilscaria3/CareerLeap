@@ -1,25 +1,60 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { getLoggedInEmailFromCookie } from '../cookieUtils'; // Adjust the import path according to your folder structure
+import { removeLoggedInEmailFromCookie } from '../cookieUtils';
 
-export function CreatePlaylists(){
+export function CreatePlaylists() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
+    const userEmailid = getLoggedInEmailFromCookie();
     const initialInputs = {
         category: '',
         link1: '',
-        link2: ''
+        channel1: "",
+        link2: '',
+        channel2: ""
     };
 
-    const [inputs, setInputs] = useState({initialInputs});
+    const [inputs, setInputs] = useState({ initialInputs });
     const [errors, setErrors] = useState({
         category: false,
         custom_error: null,
     });
 
     console.log(inputs);
+
+
+    
+    useEffect(() => {
+        // Check for authentication
+        const isAuthenticated = !!localStorage.getItem("jwtAdminToken");
+        if (!isAuthenticated) {
+            // If not authenticated, redirect to the login page
+            navigate("/adminlogin");
+        }
+    }, [navigate]);
+
+    const isTokenExpired = () => {
+        const tokenData = JSON.parse(localStorage.getItem('jwtAdminToken'));
+        const expiration = tokenData?.expiration || 0;
+        return new Date().getTime() > expiration;
+    };
+
+    const removeTokenFromLocalStorage = () => {
+        localStorage.removeItem('jwtAdminToken');
+    };
+
+    // Call this function when the application loads to handle expired tokens
+    useEffect(() => {
+        if (isTokenExpired()) {
+            removeTokenFromLocalStorage();
+            // Additional logic to handle token expiration, such as redirecting to the login page or showing an error message.
+        }
+    }, []);
+
+
 
     const handleinputs = (e) => {
         const { name, value } = e.target;
@@ -28,18 +63,18 @@ export function CreatePlaylists(){
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-    
+
         let formErrors = {
             category: false,
             custom_error: null,
         };
-    
+
         if (inputs.category.trim() === '') {
             formErrors.category = true;
         }
-    
+
         setErrors(formErrors);
-    
+
         if (inputs) {
             try {
                 const response = await fetch('http://localhost:5000/CreatePlaylist', {
@@ -52,7 +87,7 @@ export function CreatePlaylists(){
                     throw new Error('Failed to fetch data from the server.');
                 }
                 // Clear the form fields on successful submission
-                setInputs(initialInputs);
+                setInputs({initialInputs});
 
             } catch (error) {
                 console.error('Error saving playlist:', error);
@@ -60,8 +95,47 @@ export function CreatePlaylists(){
             }
         }
     };
-    
+
+    const handleLogout = () => {
+        localStorage.removeItem("jwtAdminToken");
+        removeLoggedInEmailFromCookie();
+        navigate('/adminlogin')
+    }
+
+
+    const navigateUser = () => {
+        navigate("/admin/user", { state: { adminemail: userEmailid } })
+    }
+
+    const navigatecreateplaylist = () => {
+        navigate("/createplaylist")
+    }
+
+    const navigatecreatepdf = () => {
+        navigate("/createpdf")
+    }
+
+    const navigateFumigationUser = () => {
+        navigate('/admin/fumigationuser')
+    }
+
     return (
+        <div>
+        <nav className="navbar">
+            <div className="navbrand">
+                <h1>Admin</h1>
+            </div>
+            <div className="adminloginbutton">
+                <button onClick={navigateFumigationUser}>FumigationUser</button>
+                <button onClick={navigateUser}>BrotoUser</button>
+                <button onClick={navigatecreatepdf}>PDF</button>
+                <button onClick={navigatecreateplaylist}>Playlist</button>
+            </div>
+            <div className="adminloginbutton">
+
+                <button className="adminlogout" onClick={handleLogout}>Logout</button>
+            </div>
+        </nav>
         <section className="login-block">
             <div className="container">
                 <div className="row">
@@ -81,8 +155,18 @@ export function CreatePlaylists(){
 
                             </div>
                             <div className="form-group">
+                                <label htmlFor="exampleInputPassword1" className="text-uppercase">Channel</label>
+                                <input className="form-control" type="text" name="channel1" onChange={handleinputs} placeholder="Channel 1" />
+
+                            </div>
+                            <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="text-uppercase">LInk2</label>
                                 <input className="form-control" type="text" name="link2" onChange={handleinputs} placeholder="link2" />
+
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="exampleInputPassword1" className="text-uppercase">Channel</label>
+                                <input className="form-control" type="text" name="channel2" onChange={handleinputs} placeholder="Channel 2" />
 
                             </div>
                             <input type='submit' ></input>
@@ -91,6 +175,7 @@ export function CreatePlaylists(){
                 </div>
             </div>
         </section>
+        </div>
     );
 }
 

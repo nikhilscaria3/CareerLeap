@@ -1,0 +1,148 @@
+
+/* DisplayQuestions.css */
+.questioncontainer {
+  border: 1px solid #ccc;
+  padding: 30px;
+  max-width: 800px;
+  width: 700px;
+  max-height: 600px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element */
+  overflow: auto;
+}
+
+.option-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: auto;
+}
+
+.option {
+  margin-bottom: 1px;
+}
+
+/* Styles for radio buttons */
+.radio-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radio-input {
+  margin-right: 10px;
+}
+
+
+.displayquestion {
+  margin-bottom: 20px;
+}
+
+.displayquestion p {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+.warningscore{
+  text-align: center !important ;
+  color: black;
+  font-weight: 700;
+  background-color: #ccc;
+  border-radius: 2rem;
+  
+}
+/*/* Style for the container that holds the notification */
+.fake-security-container {
+  position: relative;
+}
+
+/* Style for the notification container */
+.notification {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: rgb(207, 201, 201);
+  color: rgb(12, 1, 1);
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  /* Adjust the width or max-width as needed */
+  width: 300px;
+  max-width: 80%;
+  z-index: 1; /* Ensure the notification appears above other content */
+}
+
+/* Style for the blinking dot */
+.blinking-dot {
+  width: 30px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: rgb(67, 209, 11);
+  margin-right: 5px;
+  animation: blink-animation 1s infinite;
+}
+
+/* Keyframes for the blinking animation */
+@keyframes blink-animation {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.camera-access-container {
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  height: 200px;
+  width: 300px;
+  position: absolute;
+}
+
+.center-button-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.message {
+  text-align: center;
+}
+
+.camera-feed {
+  width: 200px;
+
+}
+video {
+  width: 300px;
+  border: 1px solid #ccc;
+}
+

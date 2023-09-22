@@ -1,0 +1,166 @@
+.otp-block {
+    float: left;
+    width: 100%;
+    height: 100%;
+    padding: 110px 0;
+    margin: auto;
+    background: url("../views/signupbg.jpg");
+    background-size: cover;
+    /* This ensures the image covers the entire container */
+
+}
+
+.container {
+    background: #ffffff;
+    border-radius: 10px;
+    width: 40%;
+    height: 100%;
+    max-height: 100%;
+    margin: auto;
+}
+
+.form-login-logo {
+    width: 100px;
+    margin: auto;
+    position: absolute;
+    left: 116px;
+}
+
+.login-sec {
+    padding: 110px 30px;
+    position: relative;
+}
+
+.login-sec h2 {
+    margin-bottom: 30px;
+    font-weight: 800;
+    font-size: 30px;
+    color: #0069c0;
+}
+
+.login-sec h2:after {
+    content: " ";
+    width: 100px;
+    height: 5px;
+    background: #6ec6ff;
+    display: block;
+    margin-top: 20px;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto
+}
+
+.btn-login {
+    background: #0069c0;
+    color: #fff;
+    font-weight: 600;
+}
+
+input[type=submit] {
+    background: #008cff;
+    cursor: pointer;
+    transition: .5s all ease;
+    padding: 6px;
+
+    border-radius: 6px;
+    margin: auto;
+    display: block;
+    color: #fff;
+}
+
+
+input[type=submit]:hover {
+    background: #008cff;
+    cursor: pointer;
+    transition: .5s all ease;
+    padding: 6px;
+    transform: scale(1.1);
+    border-radius: 6px;
+    margin: auto;
+    display: block;
+    color: #fff;
+}
+
+.googleBTN {
+    padding: 15px;
+    width: 100%;
+    border: 0px none;
+    background-color: #797389;
+    border-radius: .5rem;
+    color: white;
+    transition: all 0.4s;
+}
+
+.googleBTN:hover {
+    transition: all 0.4s;
+    background-color: white;
+    border: 1px solid black;
+    color: black;
+
+}
+
+.loginBTN {
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: .5rem;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    background-color: red;
+    color: white;
+    transition: all 0.4s;
+    margin-top: 20px;
+}
+
+.loginBTN:hover {
+    transition: all 0.4s;
+    background-color: white;
+    border: 1px solid red;
+    color: black;
+}
+
+.singupBTN {
+    color: black;
+}
+
+.singupBTN:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+.notreg {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+.forgetmeContainer {
+    display: flex;
+    margin-top: 15px;
+    justify-content: space-between;
+}
+
+.forgetmeContainer a {
+    color: black;
+}
+
+.or {
+    display: block;
+    text-align: center;
+}
+
+.inputContainer label {
+    display: block;
+    margin-top: 30px;
+    font-weight: 600;
+}
+
+.inputContainer input {
+    width: 100%;
+    background-color: #e8f0fe;
+    color: black;
+    padding: 15px;
+    border-radius: .5rem;
+    display: block;
+    margin-bottom: 3px;
+    border: 0px none;
+}

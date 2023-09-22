@@ -7,6 +7,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { WeekTaskInfo } from './WeekTaskInfo';
 import axios from 'axios';
 import Circular from '../views/Ciricular.jpg'
+import careerleaplogo from '../views/careerleaplogo2.png';
+
 
 export function WeekTask() {
   const [week, setWeek] = useState(null);
@@ -124,7 +126,7 @@ export function WeekTask() {
     <div>
       <nav className="navbar">
         <div className="navbrand">
-          <h1 className="navbrand">Welcome to your Journey</h1>
+        <img className="navlogo" src={careerleaplogo} alt="Form Logo" />
         </div>
         <div className='coursecategory'>
           <ul>
@@ -144,9 +146,7 @@ export function WeekTask() {
 
       <div className="weektaskcontainer">
         <h1>28 Week Journey</h1>
-        <div>
-          <span>Remaining Week Task Days: {daysRemaining > 0 ? daysRemaining : "Timer ended!"}</span>
-        </div>
+        <p></p>
         <div className="weekbuttons">
           {weekTasks.map((data, index) => {
             const weekNumber = index + 1;

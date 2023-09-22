@@ -4,7 +4,7 @@ import { addManifestData } from "../actions/userAction"; // Import your Redux ac
 import "../styles/manifest.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { removeLoggedInEmailFromCookie} from '../cookieUtils'
 const initialFormState = {
     week: "",
     email: "",
@@ -64,7 +64,7 @@ export function ManifestAdmin() {
         // Fetch data from the backend API
         const fetchManifest = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/manifest", {
+                const response = await fetch("http://localhost:5000/api/adminmanifest", {
                     method: "GET",
                 });
 
@@ -133,6 +133,7 @@ export function ManifestAdmin() {
 
     const handleLogout = () => {
         localStorage.removeItem("jwtAdminToken");
+        removeLoggedInEmailFromCookie();
         navigate("/adminlogin");
     };
 
@@ -161,10 +162,10 @@ export function ManifestAdmin() {
         if (!values.improvementupdate.trim()) {
             formErrors.improvementupdate = "Improvement Update is required";
         }
-        if (!values.code.trim()) {
+        if (!values.code) {
             formErrors.code = "Code is required";
         }
-        if (!values.theory.trim()) {
+        if (!values.theory) {
             formErrors.theory = "Theory is required";
         }
 
@@ -185,28 +186,27 @@ export function ManifestAdmin() {
                         values
                     );
                     setEditManifest(null);
+    
+                    // Update the local state with the edited data
+                    setManifest((prevManifest) => {
+                        const updatedManifest = prevManifest.map((manifestItem) =>
+                            manifestItem._id === editmanifest ? { ...manifestItem, ...values } : manifestItem
+                        );
+                        return updatedManifest;
+                    });
+    
                     setValues(initialFormState); // Reset editCourseId to null after updating
+                    setMessage("Successfully Updated the Manifest");
                 } else {
                     // Dispatch the action to add the course data to the backend server
                     await dispatch(addManifestData(values));
+    
+                    // After successful submission, update the local state with the newly added data
+                    setManifest((prevManifest) => [...prevManifest, values]);
+    
+                    setValues(initialFormState);
+                    setMessage("Successfully Added the Manifest");
                 }
-
-                // After successful submission, fetch the updated course list from the backend API
-                const response = await fetch("http://localhost:5000/api/usermanifest", {
-                    method: "GET",
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data from the server.");
-                }
-
-                const data = await response.json();
-                setManifest(data.course); // Update the state with the fetched courses
-
-                console.log("data", data);
-
-                // Clear the form fields after successful submission
-                setValues(initialFormState);
             } catch (error) {
                 console.error("Error submitting form:", error);
             }
@@ -214,10 +214,9 @@ export function ManifestAdmin() {
     };
 
 
-    const filteredManifest = manifest.filter(
-        (manifestItem) => manifestItem.email === `${manifestemail}`
-    );
-
+    const filteredManifest = manifest && manifest.length > 0
+    ? manifest.filter((manifestItem) => manifestItem.email === `${manifestemail}`)
+    : [];
 
     const navigateUser = () => {
         navigate("/admin/user");
@@ -353,7 +352,7 @@ export function ManifestAdmin() {
             <div className="course-container">
                 <h1 className="courselist">Manifest List</h1>
                 <div className="cards-container" style={{ color: "white" }}>
-                    {filteredManifest.map((manifestItem) => (
+                {filteredManifest.slice().reverse().map((manifestItem)=> (
                         <div
                             key={manifestItem._id}
                             className="card"

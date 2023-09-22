@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { useLocation } from 'react-router-dom';
+import careerleaplogo from '../views/careerleaplogo2.png';
+
 
 export function WeekTaskInfo() {
   const location = useLocation();
@@ -108,7 +110,7 @@ const navigate = useNavigate();
     <div>
       <nav className="navbar">
         <div className="navbrand">
-          <h1 className="navbrand">Welcome to your Journey</h1>
+        <img className="navlogo" src={careerleaplogo} alt="Form Logo" />
 
         </div>
         <div className="adminloginbutton">

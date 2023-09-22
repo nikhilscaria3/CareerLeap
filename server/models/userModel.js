@@ -2,6 +2,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  googleId:
+  {
+    type: String
+  },
   name: {
     type: String,
   },
@@ -10,13 +14,24 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  otp: { type: String, default: null },
+  status: {
+    type: String
+  },
   password: {
     type: String,
-    required: true,
+    default: 'google-auth', // Default value for Google-authenticated users
+  },
+
+  score: {
+    type: Number
   },
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  userid: {
+    type: String
   },
   week: {
     type: String
@@ -114,14 +129,30 @@ const PlaylistSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  link: [{
-    link1: {
-      type: String,
+  link: [
+    {
+      link1: {
+        type: String,
+      },
+      channel1: {
+        type: String,
+      },
     },
-    link2: {
-      type: String,
+    {
+      link2: {
+        type: String,
+      },
+      channel2: {
+        type: String,
+      },
     },
-  }],
+  ],
+});
+
+
+const pdfSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  path: { type: String, required: true },
 });
 
 
@@ -147,6 +178,95 @@ const timerSchema = new mongoose.Schema({
   // Other fields...
 });
 
+const messageSchema = new mongoose.Schema({
+  from: {
+    type: String
+  },
+  to: {
+    type: String
+  },
+  message: {
+    type: String
+  }
+})
+
+const GlobalMessageSchema = new mongoose.Schema({
+  from: {
+    type: String
+  },
+  to: {
+    type: String
+  },
+  message: {
+    type: String
+  }
+})
+
+
+const questionSchema = new mongoose.Schema({
+  question: String,
+  answer: String, // You can add the answer field here if needed
+});
+
+
+const userAnswerSchema = new mongoose.Schema({
+  useremail: String,
+  useranswers: [String],
+  score: Number
+});
+
+const userIdSchema = new mongoose.Schema({
+  email: String,
+  userid: String,
+})
+
+
+const realtimemessageSchema = new mongoose.Schema({
+  senderEmail: String,
+  recipientEmail: String,
+  message: String,
+  timestamp: { type: Date, default: Date.now },
+});
+
+
+const progressSchema = new mongoose.Schema({
+  userId: { type: String, required: true },
+  videoId: { type: String, required: true },
+  progress: { type: Number, required: true },
+});
+
+
+const enquirySchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+    required: true,
+  },
+  message: {
+    type: String,
+    required: true,
+  },
+  timestamp: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Enquiry = mongoose.model('Enquiry', enquirySchema);
+
+
+const Progress = mongoose.model('Progress', progressSchema);
+const RealTimeMessage = mongoose.model('RealTimeMessage', realtimemessageSchema);
+const UserId = mongoose.model("usersid", userIdSchema)
+const fumigationanswers = mongoose.model('useranswers', userAnswerSchema);
+const Question = mongoose.model('Question', questionSchema);
 const Timer = mongoose.model('Timer', timerSchema);
 const TaskInfo = mongoose.model('taskinfo', TaskInfoSchema);
 const CourseData = mongoose.model('Course', courseSchema);
@@ -155,7 +275,10 @@ const User = mongoose.model('User', userSchema);
 const Admin = mongoose.model('Admin', adminSchema);
 // Create a Mongoose model using the schema
 const Manifest = mongoose.model('Manifest', manifestSchema);
+const Message = mongoose.model('Message', messageSchema);
+const GlobalMessage = mongoose.model('globalmessage', GlobalMessageSchema);
+
+const Pdf = mongoose.model('Pdf', pdfSchema);
 
 
-
-module.exports = { User, Timer, Playlist, Manifest, TaskInfo, Admin, CourseData };
+module.exports = { User, Enquiry,Progress, RealTimeMessage, UserId, fumigationanswers, Question, GlobalMessage, Pdf, Message, Timer, Playlist, Manifest, TaskInfo, Admin, CourseData };

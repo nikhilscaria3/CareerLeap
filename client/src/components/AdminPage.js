@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { addCourseData } from "../actions/userAction"; // Import your Redux action here
 import "../styles/adminpage.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { getLoggedInEmailFromCookie } from '../cookieUtils'; // Adjust the import path according to your folder structure
+import { removeLoggedInEmailFromCookie } from '../cookieUtils';
 const initialFormState = {
     name: "",
     description: "",
     price: "",
-    playlistapi:""
+    playlistapi: ""
 };
 
 export default function AdminPage() {
@@ -20,6 +21,8 @@ export default function AdminPage() {
     const navigate = useNavigate()
     const dispatch = useDispatch();
     const data = useSelector((state) => state.courseadd);
+    const userEmailid = getLoggedInEmailFromCookie();
+    console.log("adminemailuser", userEmailid);
 
     useEffect(() => {
         // Check for authentication
@@ -53,7 +56,7 @@ export default function AdminPage() {
         // Fetch data from the backend API
         const fetchCourses = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/courses", {
+                const response = await fetch("http://localhost:5000/api/admin/courses", {
                     method: "GET"
                 });
 
@@ -113,6 +116,7 @@ export default function AdminPage() {
 
     const handleLogout = () => {
         localStorage.removeItem("jwtAdminToken");
+        removeLoggedInEmailFromCookie();
         navigate('/adminlogin')
     }
 
@@ -173,22 +177,35 @@ export default function AdminPage() {
         }
     };
 
-    const navigateUser = ()=>{
-        navigate("/admin/user")
+    const navigateUser = () => {
+        navigate("/admin/user", { state: { adminemail: userEmailid } })
     }
 
+    const navigatecreateplaylist = () => {
+        navigate("/createplaylist")
+    }
+
+    const navigatecreatepdf = () => {
+        navigate("/createpdf")
+    }
+
+    const navigateFumigationUser = () => {
+        navigate('/admin/fumigationuser')
+    }
     return (
         <div>
             <nav className="navbar">
                 <div className="navbrand">
                     <h1>Admin</h1>
-
-                </div>
-                <div>
-                    <button onClick={navigateUser}>User</button>
-
                 </div>
                 <div className="adminloginbutton">
+                    <button onClick={navigateFumigationUser}>FumigationUser</button>
+                    <button onClick={navigateUser}>BrotoUser</button>
+                    <button onClick={navigatecreatepdf}>PDF</button>
+                    <button onClick={navigatecreateplaylist}>Playlist</button>
+                </div>
+                <div className="adminloginbutton">
+
                     <button className="adminlogout" onClick={handleLogout}>Logout</button>
                 </div>
             </nav>
@@ -199,7 +216,7 @@ export default function AdminPage() {
                         name="name"
                         value={values.name}
                         onChange={handleChange}
-                        placeholder="Product Name"
+                        placeholder="Course Name"
                     />
                     {errors.name && <span className="error">{errors.name}</span>}
 
@@ -208,7 +225,7 @@ export default function AdminPage() {
                         name="description"
                         value={values.description}
                         onChange={handleChange}
-                        placeholder="Product Description"
+                        placeholder="Course Description"
                     />
                     {errors.description && (
                         <span className="error">{errors.description}</span>
@@ -219,7 +236,7 @@ export default function AdminPage() {
                         name="price"
                         value={values.price}
                         onChange={handleChange}
-                        placeholder="Product Price"
+                        placeholder="Course Price"
                     />
                     {errors.price && (<span className="error">{errors.price}</span>)}
 
@@ -228,7 +245,7 @@ export default function AdminPage() {
                         name="playlistapi"
                         value={values.playlistapi}
                         onChange={handleChange}
-                        placeholder="Product Api"
+                        placeholder="Course Api"
                     />
                     {errors.playlistapi && <span className="error">{errors.playlistapi}</span>}
 

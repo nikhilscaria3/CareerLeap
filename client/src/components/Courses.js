@@ -3,10 +3,17 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBell, faGlobe, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "../styles/coursePage.css";
-import careerleap from '../views/careerleap.png';
+import careerleap from '../views/CareerLeapMain.png';
+import careerleaplogo from '../views/careerleaplogo2.png';
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS CSS
+import axios from "axios";
+import { setAuthToken } from '../utils/api';
+
+
 
 const CoursePage = () => {
 
@@ -15,6 +22,8 @@ const CoursePage = () => {
     const [filteredCourses, setfilteredcourses] = useState([])
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedPlaylistApi, setSelectedPlaylistApi] = useState("null");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(8);
 
     const encodedData = localStorage.getItem("randomsession");
 
@@ -24,6 +33,13 @@ const CoursePage = () => {
     // Step 3: Extract the original loginUserData f const timestamp = decodedData.substring(0, 13); // Assuming the timestamp is 13 digits
     const jwtemail = decodedData.substring(13); // Extracting data after the timestamp
 
+    useEffect(() => {
+        AOS.init({
+            duration: 800,   // Animation duration in milliseconds
+            delay: 200,      // Animation delay in milliseconds
+            once: false,       // Animation only occurs once
+        });
+    }, []);
 
 
     const handleChange = (event) => {
@@ -52,29 +68,61 @@ const CoursePage = () => {
         }
     }, [navigate]);
 
+    const token = localStorage.getItem("jwtLLoginToken")
+
+
+
     useEffect(() => {
         // Fetch data from the backend API
         const fetchCourses = async () => {
+            const token = localStorage.getItem('jwtLoginToken');
             try {
-                const response = await fetch('http://localhost:5000/api/courses', {
-                    method: 'GET',
+                setAuthToken(token);
+                const response = await axios.get(`http://localhost:5000/api/courses`, {
+                    params: {
+                        page: currentPage,
+                        pageSize: pageSize,
+                    },
+                    headers: {
+                        // You can set headers here if needed
+                        // Example: Authorization: `Bearer ${token}`
+                    },
                 });
 
-                if (!response.ok) {
+                if (!response.data) {
                     throw new Error('Failed to fetch data from the server.');
                 }
 
-                const data = await response.json();
-                setCourses(data.course); // Update the state with the fetched courses
-                console.log("data", data);
+                setCourses(response.data.course); // Update the state with the fetched courses
+                console.log("data", response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
-
         fetchCourses(); // Call the fetchCourses function to initiate the API request
     }, []);
+
+
+    const totalPages = courses ? Math.ceil(courses.length / pageSize) : 0;
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+
+    const coursesToDisplay = courses ? courses.slice(startIndex, endIndex) : [];
+
 
     const [message, setMessage] = useState(null)
 
@@ -133,14 +181,41 @@ const CoursePage = () => {
     const handleweektask = () => {
         navigate('/weektask')
     }
+
+    const handlejscompiler = () => {
+        navigate('/jscompiler')
+    }
+
+    const handlemessage = () => {
+        navigate('/Receiver', { state: { useremail: jwtemail } })
+    }
+
+
+    const navigateglobalnavigate = () => {
+        navigate('/Global')
+    }
+
+    const handlepdfnotes = () => {
+        navigate('/pdf')
+    }
+
+
+
     return (
         <div className="course-container">
             <nav className="navbar">
                 <div className="navbrand">
-                    <h1 className="navbrand">Welcome to your Journey</h1>
+
+                    <img className="navlogo" src={careerleaplogo} alt="Form Logo" />
 
                 </div>
                 <div className="adminloginbutton">
+                    <button onClick={navigateglobalnavigate}>
+                        <FontAwesomeIcon icon={faGlobe} />
+                    </button>
+                    <button onClick={handlemessage}>
+                        <FontAwesomeIcon icon={faBell} />
+                    </button>
                     <button onClick={handlenavigate}>
                         <FontAwesomeIcon icon={faUser} />
                     </button>
@@ -174,29 +249,34 @@ const CoursePage = () => {
                         <button className="merncourse" onClick={() => handleEnrollBroto("BROTO")}>
                             BROTOTYPE
                         </button>
-
+                        <button onClick={handlejscompiler} className="weektask">COMPILER</button>
+                        <button onClick={handlepdfnotes} className="weektask">PDF NOTES</button>
                     </ul>
                 </div>
-                <div className="cards-container">
+                <div className="cards-container" data-aos="fade-up">
 
                     {filteredCourses.length > 0 ? (
                         filteredCourses.map((course) => (
-                            <div key={course._id} className="card">
+                            <div key={course._id} data-aos="zoom-in" className="card">
                                 <img src={careerleap} alt="Course" />
                                 <h2 className="coursename">{course.name}</h2>
                                 <p className="coursedescription">{course.description}</p>
                                 <p className="courseprice">Rs.{course.price}</p>
                                 <button className="enrollbutton" onClick={() => handleEnroll(course.playlistapi, course.name)}>
-                                    Enroll
+                                    <span>Enroll</span>
                                 </button>
                                 <div className="buttons-container">
 
                                 </div>
                             </div>
                         ))
+                    ) : (!coursesToDisplay.length || searchQuery) ? (
+                        <div className="empty-state">
+                            No courses found matching your search query.
+                        </div>
                     ) : (
-                        courses.map((course) => (
-                            <div key={course._id} className="card">
+                        coursesToDisplay.map((course) => (
+                            <div key={course._id} data-aos="zoom-in" className="card">
                                 <img src={careerleap} alt="Course" />
                                 <h2 className="coursename">{course.name}</h2>
                                 <p className="coursedescription">{course.description}</p>
@@ -216,6 +296,12 @@ const CoursePage = () => {
                         </div>
                     )}
                 </div>
+                <div className="pagination-container">
+                    <button className="previousbutton" onClick={handlePrevPage} disabled={currentPage === 1}>Previous</button>
+                    <span className="pagination-indicator">{`Page ${currentPage} of ${totalPages}`}</span>
+                    <button className="nextbutton" onClick={handleNextPage} disabled={currentPage === totalPages}>Next</button>
+                </div>
+
             </div>
 
         </div >

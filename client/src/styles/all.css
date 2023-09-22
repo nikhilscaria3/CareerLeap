@@ -1,0 +1,57 @@
+src/styles.css
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+  }
+  
+  h1 {
+    color: #ff4646;
+  }
+  
+  form {
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #ff4646;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #d13232;
+  }
+  
+  div.form-container {
+    margin-top: 20px;
+  }
+  
+  button.next-button {
+    margin-top: 10px;
+    background-color: #3b8eff;
+  }
+  
+  button.next-button:hover {
+    background-color: #296cc5;
+  }
+  

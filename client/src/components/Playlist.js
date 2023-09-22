@@ -9,6 +9,8 @@ const YouTubePlaylist = ({ apiKey }) => {
   const [playlistapiitems, setplaylistapiitems] = useState([]);
   const [playlistId, setPlaylistId] = useState([]); // Rename the state variable to playlistId
   const [dbcategory, setdbcategory] = useState(null)
+  const [channelName, setChannelName] = useState('');
+
 
   const location = useLocation();
   const playlistApi = location.state?.apidata;
@@ -40,6 +42,8 @@ const YouTubePlaylist = ({ apiKey }) => {
         } while (nextPageToken);
 
         setPlaylistItems(allItems);
+        const channelName = allItems.length > 0 ? allItems[0].snippet.channelTitle : ''; // Get the channel name from the first video in the playlist
+        setChannelName(channelName);
       } catch (error) {
         console.error('Error fetching playlist:', error);
       }
@@ -53,10 +57,10 @@ const YouTubePlaylist = ({ apiKey }) => {
       try {
         const response = await axios.get(`http://localhost:5000/getplaylist/${playlistcategory}`);
 
-        const data = response.dbcategory;
+        const data = response.data;
         setplaylistapiitems(data); // Update the state with the fetched courses
-        setdbcategory(data.ca);
-        console.log("datas", data.dbcategory);
+        setdbcategory(data.dbcategory);
+        console.log("datasdbcategory", data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -70,20 +74,30 @@ const YouTubePlaylist = ({ apiKey }) => {
       <div className='playlistnav'>
         <h1>{playlistcategory}</h1>
       </div>
-      <div>
-        {dbcategory === playlistcategory ? (
-          <div>
-            {playlistapiitems.links ? (
-              playlistapiitems.links.map((link, index) => (
-                <button className='playlist-button' key={link._id} onClick={() => setPlaylistId(link.link1 || link.link2)}>
-                  Link {index + 1}
-                </button>
-              ))
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
-        ) : null}
+      <div >
+        <div>
+          {dbcategory === playlistcategory ? (
+            <div className='playlistnav'>
+              {playlistapiitems.links ? (
+                playlistapiitems.links.map((link, index) => (
+                  <button
+                    className='playlist-button'
+                    key={link._id}
+                    onClick={() => setPlaylistId(link.link1 || link.link2)}
+                  >
+                    Channel {index + 1}: {link.channel} {/* Display the individual channel name */}
+                  </button>
+                ))
+              ) : (
+                <p>Loading...</p>
+              )}
+            </div>
+          ) : null}
+        </div>
+        <div className='channelnamecontainer'>
+          <button>Current Channel: {channelName}</button> {/* Display the channel name */}
+        </div>
+
       </div>
 
 

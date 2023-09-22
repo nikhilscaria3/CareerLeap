@@ -2,17 +2,30 @@
     float: left;
     width: 100%;
     padding: 50px 0;
+    max-height: 100%;
+    background: url("../views/signupbg.jpg");
+    background-size: cover; /* This ensures the image covers the entire container */
+    background-position: center center; /* This centers the image horizontally and vertically */
+}
+
+
+
+.form-register-logo {
+    width: 100px;
+    margin: auto;
+    position: absolute;
+    left: 100px;
 }
 
 .container {
-    background: #D3D3D3;
+   
     border-radius: 10px;
-    width: 40%;
-    height: 40%;
+    width: 30%;
+    height: 30%;
 }
 
 .register-sec {
-    padding: 50px 30px;
+    padding: 25px 30px;
     position: relative;
 }
 
@@ -54,7 +67,18 @@
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
+}
+
+.footerContainer{
+    display: flex;
+    margin-top: 10px;
+    justify-content: space-between;
+}
+
+.footerContainer a{
+    color:black;
 }

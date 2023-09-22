@@ -7,6 +7,10 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import careerleaplogo from '../views/careerleaplogo2.png';
+import { setAuthToken } from "../utils/api";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // Import AOS CSS
 
 const initialFormState = {
     week: "",
@@ -32,6 +36,14 @@ export function ManifestUser() {
 
     const dispatch = useDispatch();
     const data = useSelector((state) => state.courseadd);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 800,   // Animation duration in milliseconds
+            delay: 200,      // Animation delay in milliseconds
+            once: false,       // Animation only occurs once
+        });
+    }, []);
 
 
     useEffect(() => {
@@ -64,143 +76,24 @@ export function ManifestUser() {
     useEffect(() => {
         // Fetch data from the backend API
         const fetchManifest = async () => {
+            const token = localStorage.getItem('jwtLoginToken');
             try {
-                const response = await fetch("http://localhost:5000/api/manifest", {
-                    method: "GET",
-                });
+                setAuthToken(token);
+                const response = await axios.get("http://localhost:5000/api/manifest");
 
-                if (!response.ok) {
+                if (!response.data) {
                     throw new Error("Failed to fetch data from the server.");
                 }
 
-                const data = await response.json();
-                setManifest(data.manifest); // Update the state with the fetched courses
-                console.log("data", data);
+                setManifest(response.data.manifest); // Update the state with the fetched data
+                console.log("data", response.data);
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
         };
 
-        fetchManifest(); // Call the fetchCourses function to initiate the API request
+        fetchManifest(); // Call the fetchManifest function to initiate the API request
     }, []);
-
-    const handleDelete = async (manifestId) => {
-        try {
-            // Send a DELETE request to the backend API
-            await axios.delete(`http://localhost:5000/api/manifest/${manifestId}`);
-
-            // After successful deletion, update the courses state to remove the deleted course
-            setManifest((prevCourses) =>
-                prevCourses.filter((manifestItem) => manifestItem._id !== manifestId)
-            );
-        } catch (error) {
-            console.error("Error deleting manifest:", error);
-        }
-    };
-
-    const handleUpdate = (manifestId) => {
-        setEditManifest(manifestId); // Set editCourseId to the courseId when clicking the "Update" button
-        const manifestToUpdate = manifest.find(
-            (manifestItem) => manifestItem._id === manifestId
-        );
-        setValues({
-            week: manifestToUpdate.week,
-            email: manifestToUpdate.email,
-
-            developername: manifestToUpdate.developername,
-            advisorname: manifestToUpdate.advisorname,
-            reviewername: manifestToUpdate.reviewername,
-            color: manifestToUpdate.color,
-            nextweektask: manifestToUpdate.nextweektask,
-            improvementupdate: manifestToUpdate.improvementupdate,
-            code: manifestToUpdate.code,
-            theory: manifestToUpdate.theory,
-        });
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setValues((prevValues) => ({
-            ...prevValues,
-            [name]: value,
-        }));
-
-        // Clear the error message when the user starts typing again
-        setErrors((prevErrors) => ({
-            ...prevErrors,
-            [name]: "",
-        }));
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        // Validate form data before submitting
-        const formErrors = {};
-        if (!values.developername.trim()) {
-            formErrors.developername = "Developer name is required";
-        }
-        if (!values.advisorname.trim()) {
-            formErrors.advisorname = "Advisor name is required";
-        }
-        if (!values.reviewername.trim()) {
-            formErrors.reviewername = "Reviewer name is required";
-        }
-        if (!values.color.trim()) {
-            formErrors.color = "Color is required";
-        }
-        if (!values.nextweektask.trim()) {
-            formErrors.nextweektask = "Next Week's Task is required";
-        }
-        if (!values.improvementupdate.trim()) {
-            formErrors.improvementupdate = "Improvement Update is required";
-        }
-        if (!values.code.trim()) {
-            formErrors.code = "Code is required";
-        }
-        if (!values.theory.trim()) {
-            formErrors.theory = "Theory is required";
-        }
-
-        if (Object.keys(formErrors).length > 0) {
-            // If there are errors, set them in the state and prevent form submission
-            setErrors(formErrors);
-        } else {
-            try {
-                if (editmanifest) {
-                    // If editCourseId is set, it means we are updating an existing course
-                    await axios.put(
-                        `http://localhost:5000/api/manifest/${editmanifest}`,
-                        values
-                    );
-                    setEditManifest(null);
-                    setValues(initialFormState); // Reset editCourseId to null after updating
-                } else {
-                    // Dispatch the action to add the course data to the backend server
-                    await dispatch(addManifestData(values));
-                }
-
-                // After successful submission, fetch the updated course list from the backend API
-                const response = await fetch("http://localhost:5000/api/usermanifest", {
-                    method: "GET",
-                });
-
-                if (!response.ok) {
-                    throw new Error("Failed to fetch data from the server.");
-                }
-
-                const data = await response.json();
-                setManifest(data.course); // Update the state with the fetched courses
-
-                console.log("data", data);
-
-                // Clear the form fields after successful submission
-                setValues(initialFormState);
-            } catch (error) {
-                console.error("Error submitting form:", error);
-            }
-        }
-    };
 
 
     const filteredManifest = manifest.filter(
@@ -223,7 +116,7 @@ export function ManifestUser() {
         <div>
             <nav className="navbar">
                 <div className="navbrand">
-                    <h1 className="navbrand">Welcome to your Journey</h1>
+                    <img className="navlogo" src={careerleaplogo} alt="Form Logo" />
 
                 </div>
                 <div className='coursecategory'>
@@ -242,17 +135,18 @@ export function ManifestUser() {
             </nav>
 
             <div className="course-container">
-                <ul> 
-                    <button style={{backgroundColor:"Green"}} >Task Completed</button>
-                    <button style={{backgroundColor:"Yellow"}} >Task Needs Improvement</button>
-                    <button style={{backgroundColor:"Orange"}} >Task Critical</button>
-                    <button style={{backgroundColor:"Red"}} >Task Not Completed</button>
-                    <button style={{backgroundColor:"SkyBlue"}} >Week Repeat</button>
+                <ul className="manifestbuttoncontainer">
+                    <button style={{ backgroundColor: "Green" }} >Task Completed</button>
+                    <button style={{ backgroundColor: "Yellow" }} >Task Needs Improvement</button>
+                    <button style={{ backgroundColor: "Orange" }} >Task Critical</button>
+                    <button style={{ backgroundColor: "Red" }} >Task Not Completed</button>
+                    <button style={{ backgroundColor: "SkyBlue" }} >Week Repeat</button>
                 </ul>
                 <h1 className="courselist">Manifest List</h1>
                 <div className="cards-container" style={{ color: "white" }}>
-                    {filteredManifest.map((manifestItem) => (
+                    {filteredManifest.slice().reverse().map((manifestItem) => (
                         <div
+                            data-aos="zoom-in"
                             key={manifestItem._id}
                             className="card"
                             style={{ backgroundColor: manifestItem.color, color: "Black" }}
@@ -268,20 +162,6 @@ export function ManifestUser() {
                             <h5>{manifestItem.nextweektask}</h5>
                             <p>Improvement Update:</p>
                             <h5>{manifestItem.improvementupdate}</h5>
-                            <div className="buttons-container">
-                                <button
-                                    className="deletebutton"
-                                    onClick={() => handleDelete(manifestItem._id)}
-                                >
-                                    Delete
-                                </button>
-                                <button
-                                    className="updatebutton"
-                                    onClick={() => handleUpdate(manifestItem._id)}
-                                >
-                                    Update
-                                </button>
-                            </div>
                         </div>
                     ))}
                 </div>

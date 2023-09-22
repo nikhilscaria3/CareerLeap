@@ -9,7 +9,7 @@ const YouTubeBrotoPlaylist = ({ apiKey }) => {
   const [playlistId, setPlaylistId] = useState(null);
   const [dbcategory, setDbCategory] = useState([]);
   const navigate = useNavigate()
-  
+
   useEffect(() => {
     // Check for authentication
     const isAuthenticated = !!localStorage.getItem("jwtLoginToken");
@@ -100,11 +100,13 @@ const YouTubeBrotoPlaylist = ({ apiKey }) => {
                 {category.link.length > 0 ? (
                   <div className='brotocoursecategory'>
                     <ul>
-                      {category.link.map((linkItem, linkIndex) => (
-                        <button className="playlist-button" key={linkIndex} onClick={() => handleCategoryClick(category.category)}>
-                          {category.category}
-                        </button>
-                      ))}
+                      {category.category.startsWith("BROTOTYPE") && (
+                        category.link.map((linkItem, linkIndex) => (
+                          <button className="playlist-button" key={linkIndex} onClick={() => handleCategoryClick(category.category)}>
+                            {category.category}
+                          </button>
+                        ))
+                      )}
                     </ul>
                   </div>
                 ) : (

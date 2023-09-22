@@ -19,7 +19,8 @@ export function AdminLoginPage() {
 
     const dispatch = useDispatch();
     const user = useSelector((state) => state.AdminLoginUser); // Update this line
-    
+    const users = useSelector((state) => state.adminloginuser.data); // Update this line
+    console.log("adminuser", users);
     useEffect(() => {
         console.log("user", user);
     }, [user]); // Add 'user' to the dependency array
@@ -56,7 +57,7 @@ export function AdminLoginPage() {
                 setFormData({ email: '', password: '' });
                 console.log("users", userData);
                 // This will prevent the back button from going back to the login page
-                navigate('/courseadd', { state: { data: userData }, replace: true });
+                navigate('/courseadd', { state: { data: userData.data }, replace: true });
 
 
                 // Wait for the dispatch Promise to resolve before navigating
@@ -70,7 +71,7 @@ export function AdminLoginPage() {
     };
 
     return (
-        <section className="login-block">
+        <section className="adminlogin-block">
             <div className="container">
                 <div className="row">
                     <div className="col login-sec">

@@ -30,3 +30,528 @@ e. Social media links with proper contact details
 4. Read the document below and check the performance of your website. Improve your website until you acquire a score above 90.
               https://developers.google.com/web/tools/lighthouse#devtools
 
+
+
+
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import '../styles/message.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBell, faSearch, faUser } from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
+export function UserMessage() {
+    const [message, setMessage] = useState("");
+    const [getmessage, setresponsemesssage] = useState([]);
+    const [getresponseemail, setresponseemail] = useState([]);
+    // State to keep track of the selected email
+    const [selectedEmail, setSelectedEmail] = useState(null);
+    const uniqueSenderEmails = Array.from(new Set(getresponseemail));
+
+    const location = useLocation()
+    const email = location?.state.useremail
+    const name = location?.state.username
+
+    const navigate = useNavigate();
+    const encodedData = localStorage.getItem("randomsession");
+
+    // Step 2: Decode the data using Base64
+    const decodedData = atob(encodedData);
+
+    // Step 3: Extract the original loginUserData f const timestamp = decodedData.substring(0, 13); // Assuming the timestamp is 13 digits
+    const jwtemail = decodedData.substring(13); // Extracting data after the timestamp
+
+
+
+    // const handlechangemessage = (event) => {
+    //     // Extract the input value from the event object
+    //     const inputValue = event.target.value;
+    //     // Update the state using the functional update form
+    //     setMessage(inputValue);
+    // };
+
+    // const handlesendmessage = async () => {
+    //     try {
+    //         // Make sure to send the message inside an object with the appropriate key
+    //         const response = await axios.post("http://localhost:5000/api/setmessage", {
+    //             message: message,
+    //             email: email
+    //         });
+    //         console.log(response.data);
+    //         setMessage({ message: "" })
+    //     } catch (error) {
+    //         console.error("Error sending message:", error);
+    //     }
+    // };
+
+    useEffect(() => {
+        const handlegetmessage = async () => {
+            try {
+                // Make sure to send the message inside an object with the appropriate key
+                const response = await axios.get(`http://localhost:5000/api/getmessage/${email}`);
+                console.log("response", response.data);
+                setresponsemesssage(response.data.message)
+                setresponseemail(response.data.fromemail)
+            } catch (error) {
+                console.error("Error sending message:", error);
+            }
+        };
+
+        handlegetmessage()
+    }, [])
+    // ... (previous code)
+
+
+    const handlenavigate = () => {
+        navigate('/profile')
+    }
+
+    const handlemessage = () => {
+        navigate('/user/message', { state: { useremail: jwtemail } })
+    }
+
+
+
+    return (
+
+        <div>
+            <nav className="navbar">
+                <div className="navbrand">
+                    <h1 className="navbrand">Welcome to your Journey</h1>
+
+                </div>
+                <div className="adminloginbutton">
+                    <button onClick={handlemessage}>
+                        <FontAwesomeIcon icon={faBell} />
+                    </button>
+                    <button onClick={handlenavigate}>
+                        <FontAwesomeIcon icon={faUser} />
+                    </button>
+                </div>
+            </nav>
+            <div>
+                <h3>Received Chat</h3>
+            </div>
+
+
+            <div className="message-container">
+                {getmessage.length > 0 ? (
+                    uniqueSenderEmails.length > 0 ? (
+                        <div className="messageemail-container">
+                            {uniqueSenderEmails.map((fromEmail, index) => {
+                                // Filter messages that have the current fromEmail
+                                const messagesForEmail = getmessage.filter(
+                                    (_, messageIndex) => getresponseemail[messageIndex] === fromEmail
+                                );
+
+                                return (
+                                    <div key={index} className="email-container">
+                                        <button
+                                            className={`email-button${selectedEmail === fromEmail ? " active" : ""}`}
+                                            onClick={() => setSelectedEmail(selectedEmail === fromEmail ? null : fromEmail)}
+                                        >
+                                            {fromEmail}
+                                        </button>
+                                        <div>
+                                            {selectedEmail === fromEmail && (
+                                                <div className="message-bg">
+                                                    {messagesForEmail.map((msg, messageIndex) => (
+                                                        <div key={messageIndex}>
+                                                            <p className="message">{messageIndex + 1}: {msg}</p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : (
+                        <p>No messages found for the provided email.</p>
+                    )
+                ) : (
+                    <p>Loading...</p>
+                )}
+                <div>{/* Display any message you want here */}</div>
+            </div>
+        </div>
+    );
+};
+
+
+
+
+
+///////////////////////////////////////////
+
+
+import React, { useState, useEffect } from 'react';
+import io from 'socket.io-client';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
+import '../styles/realtimechat.css'
+const socket = io('http://localhost:3000');
+
+function ReceiverChat() {
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([]);
+  const [admins, setAdmins] = useState([]); // Store admin emails here
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const location = useLocation();
+  const encodedData = localStorage.getItem('randomsession');
+  const decodedData = atob(encodedData);
+  const jwtemail = decodedData.substring(13);
+
+  useEffect(() => {
+    socket.on('privateMessage', (data) => {
+      console.log('Received message:', data);
+      setMessages((prevMessages) => [...prevMessages, data]);
+    });
+  }, []);
+
+  useEffect(() => {
+    const fetchUserMessages = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/getrealreceivertimessages', {
+          params: { email: jwtemail }
+        });
+        setMessages(response.data);
+        console.log(response.data);
+        // Get unique admin emails from messages
+        const uniqueAdmins = Array.from(new Set(response.data.map(msg => msg.senderEmail)));
+        setAdmins(uniqueAdmins);
+        setSelectedAdmin(uniqueAdmins[0]); // Set the selected admin to the first admin in the list
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    };
+
+    fetchUserMessages();
+  }, []);
+
+ useEffect(() => {
+  const fetchSelectedAdminMessages = async () => {
+    try {
+      const response = await axios.get('http://localhost:5000/getselectedadminmessages', {
+        params: { email: selectedAdmin }
+      });
+      // Merge the new admin messages with the existing messages
+      setMessages(response.data);
+    } catch (error) {
+      console.error('Error fetching admin messages:', error);
+    }
+  };
+
+  fetchSelectedAdminMessages();
+}, [selectedAdmin]);
+
+
+
+  const handleAdminButtonClick = (admin) => {
+    setSelectedAdmin(admin);
+  };
+
+  const adminMessages = messages.filter(msg => msg.senderEmail === selectedAdmin);
+
+  const sendPrivateMessage = () => {
+    if (message.trim() !== '' && selectedAdmin) {
+      socket.emit('privateMessage', {
+        senderEmail: jwtemail,
+        recipientEmail: selectedAdmin,
+        message,
+      });
+      setMessage('');
+    }
+  };
+
+  return (
+    <div className="receiver-chat-container">
+
+      <div className="admin-buttons">
+        <strong>Admins:</strong>
+        <ul className='admineachbutton'>
+          {admins.map((admin) => (
+            <li key={admin}>
+              <button className='adminmessagebutton' onClick={() => handleAdminButtonClick(admin)}>{admin}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <div className='realtimemessage-container'>
+        <div className="message-display">
+          {adminMessages.map((msg, index) => (
+            <div key={index} className={msg.senderEmail === jwtemail ? 'sent' : 'received'}>
+              <strong>{msg.senderEmail}:</strong> {msg.message}
+            </div>
+          ))}
+        </div>
+        <div className="input-area">
+          <input
+            type="text"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+          <button onClick={sendPrivateMessage}>Send</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default ReceiverChat;
+
+
+
+
+
+Reset default margin and padding
+body,
+h1,
+h2,
+p,
+div,
+button,
+img {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply general styles for the profile container */
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.score-container {
+  justify-content: center;
+  display: flex;
+  margin: auto;
+  background-color: #ffffff;
+  border: 1px solid #858383;
+  padding: 12px 12px;
+  color: black;
+  border-radius: 1rem;
+}
+
+/* Style the welcome header */
+.navbrand {
+  text-align: center;
+  color: #007bff;
+  font-size: 28px;
+}
+
+/* Style the user profile container */
+.user-profile {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Style the profile image section */
+.profile-image {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style the message section */
+.message {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+}
+
+/* Style the uploaded image section */
+.uploadedimage {
+  border: 1px solid #ccc;
+  text-align: center;
+  background-color: #f0f0f0;
+  border-radius: 10%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin-bottom: 3px;
+}
+
+.uploadedimage img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10%;
+}
+
+/* Style the file upload input and button */
+.uploadbutton {
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+.uploadbutton svg {
+  margin-right: 5px;
+}
+
+.uploadbutton:hover {
+  background-color: #0056b3;
+}
+
+/* Style the user info container */
+.user-info {
+  flex: 1;
+  margin-left: 20px;
+  position: relative;
+  top: 48px;
+}
+
+/* Style the user card */
+.user-card {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Style for the custom file input button */
+.file-input-label {
+  opacity: -1;
+  padding: 20px 30px;
+  position: absolute;
+  top: 10rem;
+  align-items: center;
+  margin: auto;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
+  visibility: visible;
+  position: absolute;
+  top: 9rem;
+  opacity: 1;
+}
+
+/* Hide the default file input button */
+.file-input {
+  display: none;
+}
+
+
+.upload-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  opacity: 1;
+}
+
+.upload-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  opacity: -1;
+}
+
+/* Style the user buttons */
+.user-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.user-button button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
+}
+
+.user-button button:last-child {
+  margin-right: 0;
+}
+
+.user-button button:hover {
+  background-color: #0056b3;
+}
+
+/* styles.css */
+
+
+.administratormessaage-container {
+  margin-top: 10px;
+  align-content: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.administrator-message {
+  font-size: 16px;
+  color: #ff0000; /* Red color for emphasis */
+}
+
+
+/* Add a class for the dull overlay */
+.dull-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* Dark overlay color with reduced opacity */
+  z-index: 1000; /* Ensure the overlay is above other content */
+  display: none; /* Initially hidden */
+}
+
+/* Style for the center button container */
+.profilecenter-button-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001; /* Ensure the container is above the overlay */
+  display: block; /* Initially hidden */
+}
+
+/* Add styles to display when container is visible */
+.profilecenter-button-container.show {
+  display: block;
+}
+
+/* Add styles to display the overlay when container is visible */
+.dull-overlay.show {
+  display: block;
+}

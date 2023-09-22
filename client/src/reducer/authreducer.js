@@ -1,7 +1,7 @@
 // redux/reducers.js
 
 import { combineReducers } from 'redux';
-import { REGISTER_SUCCESS, REGISTER_ERROR, LOGIN_SUCCESS, LOGIN_ERROR, PROFILE_SUCCESS, PROFILE_ERROR, ADMINLOGIN_SUCCESS, ADMINLOGIN_ERROR } from '../actions/userAction';
+import { REGISTER_SUCCESS, REGISTER_ERROR, LOGIN_SUCCESS, LOGIN_ERROR, PROFILE_SUCCESS, PROFILE_ERROR, } from '../actions/userAction';
 
 // Initial state for the user
 const initialState = {
@@ -12,6 +12,8 @@ const initialState = {
     isAuthenticated: localStorage.getItem('jwtLoginToken'),
     isAdminAuthenticated: localStorage.getItem('jwtAdminToken'),
 };
+
+
 
 // Reducer function for handling user registration
 const userReducer = (state = initialState, action) => {
@@ -33,38 +35,23 @@ const loginReducer = (state = initialState, action) => {
                 ...state,
                 loginUser: action.payload.loginUser, // Update loginUser with the data from action.payload
                 error: null,
-                isAuthenticated:true// Reset error on successful login
+                message: action.message,
+                isAuthenticated: true// Reset error on successful login
             };
         case LOGIN_ERROR:
             return {
                 ...state,
+                message: action.message,
                 loginUser: null, // Set loginUser to null on login error
-                error: action.payload,isAuthenticated:false // Set the error message
+                error: action.payload, 
+                isAuthenticated: false // Set the error message
             };
         default:
             return state;
     }
 };
 
-const AdminloginReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case ADMINLOGIN_SUCCESS:
-            return {
-                ...state,
-                adminloginuser: action.payload.adminloginuser, // Update loginUser with the data from action.payload
-                error: null,
-                isAdminAuthenticated:true// Reset error on successful login
-            };
-        case ADMINLOGIN_ERROR:
-            return {
-                ...state,
-                adminloginuser: null, // Set loginUser to null on login error
-                error: action.payload,isAdminAuthenticated:false // Set the error message
-            };
-        default:
-            return state;
-    }
-};
+
 
 
 const profileReducer = (state = initialState, action) => {
@@ -91,7 +78,8 @@ const rootReducer = combineReducers({
     user: userReducer,
     loginUser: loginReducer,
     profileimage: profileReducer,
-    adminloginuser:AdminloginReducer
+
 });
 
 export default rootReducer;
+
