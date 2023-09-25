@@ -3,7 +3,7 @@
     width: 100%;
     padding: 50px 0;
     max-height: 100%;
-    background: url("../views/signupbg.jpg");
+    background: url("..\/views\/signupbg.jpg");
     background-size: cover; /* This ensures the image covers the entire container */
     background-position: center center; /* This centers the image horizontally and vertically */
 }

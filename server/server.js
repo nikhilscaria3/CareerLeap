@@ -5,7 +5,6 @@ const { spawn } = require('child_process');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
-
 const port = process.env.PORT || 5000;
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -17,7 +16,9 @@ const socketIO = require('socket.io');
 const server = http.createServer(app);
 const io = socketIO(server);
 
+
 app.use(bodyParser.json());
+
 // Set up CORS handling
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend URL
@@ -27,28 +28,25 @@ app.use((req, res, next) => {
 });
 
 
-
-
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-
-
 app.use(express.json());
-
-app.use('/uploads', express.static('uploads'));
-
+app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
 app.use(cors({ origin: 'http://localhost:3000' }));
 
 
-const dbURI = 'mongodb://127.0.0.1:27017/ReduxApp';
+const dbURI = process.env.DB_LOCAL_URI;
+
 
 mongoose.connect(dbURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
+
 mongoose.connection.on('connected', () => {
   console.log('Connected to MongoDB');
 });
+
 
 mongoose.connection.on('error', (err) => {
   console.error('Error connecting to MongoDB:', err);
@@ -71,7 +69,6 @@ const pdfRoutes = require('./routes/pdfRoutes');
 const questionsRouter = require('./routes/fumigationRoutes');
 const userAnswersRouter = require('./routes/questionRoutes');
 const RealTimeMessages = require('./routes/realtimemessages');
-
 const progressRoutes = require('./routes/progressRoutes'); // Adjust the path accordingly
 
 
@@ -96,11 +93,13 @@ const {User} = require('./models/userModel');
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 // Configure Passport for Google login
 passport.use(new GoogleStrategy({
   clientID: '710019880977-d77t8mffj0e0cbsl9q1hja4ntesg9mdi.apps.googleusercontent.com',
   clientSecret: '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',
-  callbackURL: 'http://localhost:5000/auth/google/callback',
+  callbackURL: `http://localhost:5000/auth/google/callback`,
 },
 async(accessToken, refreshToken, profile, done) => {
   // Check if the user already exists in the database
@@ -127,10 +126,12 @@ async(accessToken, refreshToken, profile, done) => {
   }
 }));
 
+
 // Serialize user data
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
+
 
 passport.deserializeUser(async (id, done) => {
   try {
@@ -145,9 +146,6 @@ passport.deserializeUser(async (id, done) => {
 // Routes
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-
-
 
 
 io.on('connection', (socket) => {
@@ -206,7 +204,19 @@ app.post('/execute-python', (req, res) => {
     }
   });
 });
+
+
+
 // Start the server
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+
+
+if(process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.get('*', (req, res) =>{
+      res.sendFile(path.resolve(__dirname, '../client/build/index.html'))
+  })
+}

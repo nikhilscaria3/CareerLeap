@@ -4,7 +4,7 @@
     height: 100%;
     padding: 110px 0;
     margin: auto;
-    background: url("../views/signupbg.jpg");
+    background: url("..\/views\/signupbg.jpg");
     background-size: cover;
     /* This ensures the image covers the entire container */
 

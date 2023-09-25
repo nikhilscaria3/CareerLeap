@@ -3,6 +3,8 @@ const path = require('path')
 
 const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 
+
+
 // Upload a user profile image
 exports.uploadUserProfileImage = async (req, res) => {
   try {
@@ -49,6 +51,8 @@ exports.uploadUserProfileImage = async (req, res) => {
   }
 };
 
+
+
 // Get user data by email
 exports.getUserDataByEmail = async (req, res) => {
   const { id } = req.params;
@@ -70,6 +74,8 @@ exports.getUserDataByEmail = async (req, res) => {
   }
 };
 
+
+
 // Get user score by email
 exports.getUserScoreByEmail = async (req, res) => {
   const { id } = req.params;
@@ -85,6 +91,8 @@ exports.getUserScoreByEmail = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
+
+
 
 // Add user ID by email
 exports.addUserIdByEmail = async (req, res) => {

@@ -10,7 +10,7 @@
 .realtimemessage-global-container {
   flex: 1;
   padding: 20px;
-  background: url('../views/tile_background.png');
+  background: url('..\/views/tile_background.png');
   background-size: cover;
   overflow-y: auto;
 }

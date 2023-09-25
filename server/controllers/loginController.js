@@ -134,7 +134,7 @@ exports.loginVerifyOTP = async (req, res) => {
 exports.googleLogin = async (req, res) => {
   try {
     const { accessToken } = req.body;
-
+console.log(accessToken);
     if (!accessToken) {
       return res.status(400).json({ message: "Missing access token!" });
     }

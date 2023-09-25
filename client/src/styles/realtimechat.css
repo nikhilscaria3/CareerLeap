@@ -10,7 +10,7 @@
 .admin-buttons {
   flex: 1;
   padding: 20px;
- background: url('../views/8c98994518b575bfd8c949e91d20548b.jpg');
+ background: url('..\/views\/8c98994518b575bfd8c949e91d20548b.jpg');
   border-right: 1px solid #ccc;
   overflow-y: auto;
 }
@@ -41,7 +41,7 @@
 .message-display {
   flex: 1;
   padding: 20px;
-  background: url('../views/tile_background.png');
+  background: url('..\/views\/tile_background.png');
   background-size: cover;
   background-position: center;
   backface-visibility: visible;
