@@ -20,17 +20,10 @@ const io = socketIO(server);
 app.use(bodyParser.json());
 
 app.use(cors({
-  origin: 'http://16.170.223.252:5000', // Replace with your frontend's URL
+  origin: 'http://16.170.223.252:5000',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true, // Enable CORS credentials (cookies, authorization headers)
 }));
-
-// Set up CORS handling
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://16.170.223.252:5000'); // Replace with your frontend URL
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
