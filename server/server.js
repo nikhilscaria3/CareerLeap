@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
 const { spawn } = require('child_process');
 const bodyParser = require('body-parser');
@@ -19,11 +18,7 @@ const io = socketIO(server);
 
 app.use(bodyParser.json());
 
-app.use(cors({
-  origin: 'http://16.170.223.252:5000',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true, // Enable CORS credentials (cookies, authorization headers)
-}));
+
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
