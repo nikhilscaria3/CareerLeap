@@ -34,7 +34,7 @@ app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
 
 
 app.use(cors({
-  origin: 'http://51.20.83.153:5000',
+  origin: 'http://localhost:5000',
   credentials: true, // If you need to send cookies or credentials
 }));
 
