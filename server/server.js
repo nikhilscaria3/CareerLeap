@@ -19,9 +19,13 @@ const io = socketIO(server);
 
 app.use(bodyParser.json());
 
+app.use(cors({
+  origin: 'http://16.170.223.252:5000', // Replace with your frontend's URL
+}));
+
 // Set up CORS handling
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Replace with your frontend URL
+  res.setHeader('Access-Control-Allow-Origin', 'http://16.170.223.252:5000'); // Replace with your frontend URL
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
@@ -33,10 +37,6 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
 
 
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true, // If you need to send cookies or credentials
-}));
 
 const dbURI = process.env.DB_LOCAL_URI;
 
