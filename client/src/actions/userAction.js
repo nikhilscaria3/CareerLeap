@@ -56,6 +56,7 @@ export const LoginUser = (userData,) => {
 
         } catch (error) {
             // Handle login error, if any
+            console.log(error);
             dispatch({ type: LOGIN_ERROR, payload: 'Failed to Login -  Check Password or Email' });
 
         }
