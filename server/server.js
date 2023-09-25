@@ -57,7 +57,7 @@ const {RealTimeMessage} = require('../server/models/userModel')
 
 const userRoutes = require('./routes/userRoutes'); // Import the userRoutes file
 const LoginRoute = require('./routes/loginRoutes')
-const ProfileRoute = require('./routes/profileRoutes')
+const ProfileRoute = require('./routes/ProfileRoutes')
 const CreatePlaylistRoute = require('./routes/playlistRoutes')
 const CourseAddRoute = require('./routes/courseRoutes');
 const taskRoute = require('./routes/weektaskRoutes');
