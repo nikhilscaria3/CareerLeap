@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const mongoose = require('mongoose');
 const { spawn } = require('child_process');
 const bodyParser = require('body-parser');
@@ -18,11 +19,15 @@ const io = socketIO(server);
 
 app.use(bodyParser.json());
 
+const corsOptions = {
+  origin: 'http://16.170.223.252:5000', // Replace with your frontend's URL
+};
 
+app.use(cors(corsOptions));
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 
 
 
@@ -47,7 +52,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 
-const {RealTimeMessage} = require('../server/models/userModel')
+const { RealTimeMessage } = require('../server/models/userModel')
 
 const userRoutes = require('./routes/userRoutes'); // Import the userRoutes file
 const LoginRoute = require('./routes/loginRoutes')
@@ -72,7 +77,7 @@ app.use('/', userAnswersRouter);
 app.use('/', userRoutes); // Use the userRoutes middleware
 app.use('/', LoginRoute); // Use the userRoutes middleware
 app.use('/', ProfileRoute)
-app.use('/',CourseAddRoute)
+app.use('/', CourseAddRoute)
 app.use('/', CreatePlaylistRoute)
 app.use('/', taskRoute)
 app.use('/', adminUserupdate)
@@ -82,7 +87,7 @@ app.use('/', chatbotRoutes);
 app.use('/', pdfRoutes);
 app.use('/', RealTimeMessages)
 
-const {User} = require('./models/userModel');
+const { User } = require('./models/userModel');
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -95,30 +100,30 @@ passport.use(new GoogleStrategy({
   clientSecret: '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',
   callbackURL: `http://localhost:5000/auth/google/callback`,
 },
-async(accessToken, refreshToken, profile, done) => {
-  // Check if the user already exists in the database
-  try {
+  async (accessToken, refreshToken, profile, done) => {
     // Check if the user already exists in the database
-    const existingUser = await User.findOne({ googleId: profile.id });
+    try {
+      // Check if the user already exists in the database
+      const existingUser = await User.findOne({ googleId: profile.id });
 
-    if (!existingUser) {
-      // If user doesn't exist, create a new user in the database
-      const newUser = new User({
-        googleId: profile.id,
-        email: profile.emails[0].value,
-        name: profile.displayName,
-      });
+      if (!existingUser) {
+        // If user doesn't exist, create a new user in the database
+        const newUser = new User({
+          googleId: profile.id,
+          email: profile.emails[0].value,
+          name: profile.displayName,
+        });
 
-      await newUser.save();
-      done(null, newUser);
-    } else {
-      // If user exists, simply return the user object
-      done(null, existingUser);
+        await newUser.save();
+        done(null, newUser);
+      } else {
+        // If user exists, simply return the user object
+        done(null, existingUser);
+      }
+    } catch (error) {
+      done(error);
     }
-  } catch (error) {
-    done(error);
-  }
-}));
+  }));
 
 
 // Serialize user data
@@ -201,16 +206,18 @@ app.post('/execute-python', (req, res) => {
 
 
 
+
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/build/index.html'))
+  })
+}
+
+
 // Start the server
-server.listen(port, () => {
+app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
 
-
-
-if(process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, '../client/build')));
-  app.get('*', (req, res) =>{
-      res.sendFile(path.resolve(__dirname, '../client/build/index.html'))
-  })
-}
