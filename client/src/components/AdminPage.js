@@ -56,7 +56,7 @@ export default function AdminPage() {
         // Fetch data from the backend API
         const fetchCourses = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/admin/courses", {
+                const response = await fetch("/api/admin/courses", {
                     method: "GET"
                 });
 

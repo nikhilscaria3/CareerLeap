@@ -65,7 +65,7 @@ export function AdminFumigationUserInfo() {
         // Fetch data from the backend API
         const fetchCourses = async () => {
             try {
-                const response = await fetch("http://localhost:5000/admin/fumigationuser", {
+                const response = await fetch("/admin/fumigationuser", {
                     method: "GET"
                 });
 
@@ -88,7 +88,7 @@ export function AdminFumigationUserInfo() {
         console.log("week", week.email);
         try {
             // Make the POST request to update the user's data
-            const response = await axios.post("http://localhost:5000/admin/useridupdate", {
+            const response = await axios.post("/admin/useridupdate", {
                 email: email,
                 userid: week.email,
             });

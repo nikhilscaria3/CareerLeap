@@ -70,7 +70,7 @@ export const AdminLoginUser = (userData,) => {
     return async (dispatch) => {
         try {
             // Make an API call to log in the user
-            const response = await fetch('http://localhost:5000/adminloginUser', {
+            const response = await fetch('/adminloginUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),
@@ -146,7 +146,7 @@ export const addCourseData = (coursedata) => {
     return async (dispatch) => {
         try {
             // Make an API call to upload the profile image
-            const response = await fetch('http://localhost:5000/api/courseadd', {
+            const response = await fetch('/api/courseadd', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(coursedata), // Pass the FormData object directly as the request body
@@ -181,7 +181,7 @@ export const addManifestData = (manifestdata) => {
     return async (dispatch) => {
         try {
             // Make an API call to upload the profile image
-            const response = await fetch('http://localhost:5000/api/manifestadd', {
+            const response = await fetch('/api/manifestadd', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(manifestdata), // Pass the FormData object directly as the request body

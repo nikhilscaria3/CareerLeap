@@ -98,7 +98,7 @@ console.log("jwt",jwtemail);
       const token = localStorage.getItem('jwtLoginToken');
       try {
         setAuthToken(token);
-        const response = await axios.get(`http://localhost:5000/getuserscore/${jwtemail}`, {
+        const response = await axios.get(`/getuserscore/${jwtemail}`, {
           params: { jwtemail }
         });
 
@@ -127,7 +127,7 @@ console.log("jwt",jwtemail);
     try {
       setAuthToken(token);
       // Make an API call to upload the file to the server
-      const response = await axios.post('http://localhost:5000/api/upload', formData, {
+      const response = await axios.post('/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
