@@ -19,11 +19,7 @@ const io = socketIO(server);
 
 app.use(bodyParser.json());
 
-const corsOptions = {
-  origin: 'http://16.170.223.252:5000', // Replace with your frontend's URL
-};
-
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
