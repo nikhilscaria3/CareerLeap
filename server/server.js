@@ -31,8 +31,12 @@ app.use((req, res, next) => {
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname,'uploads') ) )
-app.use(cors({ origin: 'http://localhost:3000' }));
 
+
+app.use(cors({
+  origin: 'http://51.20.83.153:5000',
+  credentials: true, // If you need to send cookies or credentials
+}));
 
 const dbURI = process.env.DB_LOCAL_URI;
 
