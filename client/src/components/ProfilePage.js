@@ -72,7 +72,7 @@ console.log("jwt",jwtemail);
       const token = localStorage.getItem('jwtLoginToken');
       try {
         setAuthToken(token);
-        const response = await axios.get(`http://localhost:5000/getuserdata/${jwtemail}`, {
+        const response = await axios.get(`/getuserdata/${jwtemail}`, {
           params: { jwtemail }
           
         });

@@ -11,7 +11,7 @@ export const registerUser = (userData) => {
     return async (dispatch) => {
         try {
             // Make an API call to register the user
-            const response = await fetch('http://localhost:5000/register', {
+            const response = await fetch('/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),
@@ -38,7 +38,7 @@ export const LoginUser = (userData,) => {
     return async (dispatch) => {
         try {
             // Make an API call to log in the user
-            const response = await fetch('http://localhost:5000/loginUser', {
+            const response = await fetch('/loginUser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData),
@@ -111,7 +111,7 @@ export const profileImage = (imageData) => {
     return async (dispatch) => {
         try {
             // Make an API call to upload the profile image
-            const response = await fetch('http://localhost:5000/profileimage', {
+            const response = await fetch('/profileimage', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(imageData), // Pass the FormData object directly as the request body
