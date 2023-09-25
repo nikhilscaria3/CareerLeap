@@ -40,6 +40,8 @@ app.use(cors({
 
 const dbURI = process.env.DB_LOCAL_URI;
 
+mongoose.set('strictQuery', true);
+
 
 mongoose.connect(dbURI, {
   useNewUrlParser: true,
