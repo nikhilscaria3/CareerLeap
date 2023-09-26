@@ -71,6 +71,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/standalone": "^7.22.9"
+    "@babel/standalone": "^7.22.9",
+    "@babel/plugin-proposal-private-property-in-object": "^1.0.0"
   }
 }
