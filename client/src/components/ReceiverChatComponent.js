@@ -25,7 +25,7 @@ function ReceiverChat() {
   useEffect(() => {
     const fetchUserMessages = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getrealreceivertimessages', {
+        const response = await axios.get('/getrealreceivertimessages', {
           params: { email: jwtemail }
         });
         setMessages(response.data);
@@ -46,7 +46,7 @@ function ReceiverChat() {
   useEffect(() => {
     const fetchSelectedAdminMessages = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getselectedadminmessages', {
+        const response = await axios.get('/getselectedadminmessages', {
           params: { email: selectedAdmin }
         });
         // Merge the new admin messages with the existing messages

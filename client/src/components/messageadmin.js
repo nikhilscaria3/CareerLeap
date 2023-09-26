@@ -38,7 +38,7 @@ export function Message() {
         setIsSending(true); // Set sending state to true when sending starts
 
         try {
-            const response = await axios.post('http://localhost:5000/api/send-email', {
+            const response = await axios.post('/api/send-email', {
                 recipientEmail,
                 message, // Send the message state
             });

@@ -24,7 +24,7 @@ function Chat() {
   useEffect(() => {
     const fetchUserMessages = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getrealtimessages', {
+        const response = await axios.get('/getrealtimessages', {
           params: { email: email }
         });
         setMessages(response.data);

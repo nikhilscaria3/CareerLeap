@@ -64,7 +64,7 @@ export function ManifestAdmin() {
         // Fetch data from the backend API
         const fetchManifest = async () => {
             try {
-                const response = await fetch("http://localhost:5000/api/adminmanifest", {
+                const response = await fetch("/api/adminmanifest", {
                     method: "GET",
                 });
 
@@ -86,7 +86,7 @@ export function ManifestAdmin() {
     const handleDelete = async (manifestId) => {
         try {
             // Send a DELETE request to the backend API
-            await axios.delete(`http://localhost:5000/api/manifest/${manifestId}`);
+            await axios.delete(`/api/manifest/${manifestId}`);
 
             // After successful deletion, update the courses state to remove the deleted course
             setManifest((prevCourses) =>
@@ -182,7 +182,7 @@ export function ManifestAdmin() {
                 if (editmanifest) {
                     // If editCourseId is set, it means we are updating an existing course
                     await axios.put(
-                        `http://localhost:5000/api/manifest/${editmanifest}`,
+                        `/api/manifest/${editmanifest}`,
                         values
                     );
                     setEditManifest(null);

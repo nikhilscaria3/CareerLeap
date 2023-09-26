@@ -21,7 +21,7 @@ function DisplayQuestionAndAnswers() {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/userquestions');
+      const response = await axios.get('/userquestions');
       const data = response.data;
       console.log(data);
       setQuestions(data);
@@ -33,7 +33,7 @@ function DisplayQuestionAndAnswers() {
 
   const fetchUserAnswers = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/useranswers', {
+      const response = await axios.get('/useranswers', {
         params: { useremail: fumigationuseremail } // Use 'params' to send query parameters
       });
       const data = response.data;

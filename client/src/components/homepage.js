@@ -30,7 +30,7 @@ function Elearning() {
         e.preventDefault();
         try {
           // Handle form submission here (e.g., send data to a server or perform some action)
-          const response = await axios.post('http://localhost:5000/enquiry', {
+          const response = await axios.post('/enquiry', {
             formData,
           });
       

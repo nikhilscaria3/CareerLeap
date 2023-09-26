@@ -55,7 +55,7 @@ const YouTubePlaylist = ({ apiKey }) => {
   useEffect(() => {
     const fetchPlaylist = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getplaylist/${playlistcategory}`);
+        const response = await axios.get(`/getplaylist/${playlistcategory}`);
 
         const data = response.data;
         setplaylistapiitems(data); // Update the state with the fetched courses

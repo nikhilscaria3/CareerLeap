@@ -33,7 +33,7 @@ const navigate = useNavigate();
 
   const fetchTimerDataFromBackend = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/getTimerData");
+      const response = await axios.get("/api/getTimerData");
       setStartTimestamp(response.startTimestamp);
       setDaysRemaining(response.remainingDays);
       console.log("Timer data fetched from the backend!");
@@ -67,7 +67,7 @@ const navigate = useNavigate();
 
   const saveToBackend = async () => {
     try {
-      await axios.post("http://localhost:5000/api/startTimer", {
+      await axios.post("/api/startTimer", {
         startTimestamp,
         daysRemaining,
       });
@@ -80,7 +80,7 @@ const navigate = useNavigate();
   useEffect(() => {
     const fetchTaskInfo = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/gettaskinfo/${taskweek}`);
+        const response = await axios.get(`/gettaskinfo/${taskweek}`);
         const taskInfoData = response.data;
         console.log("taskInfoData", taskInfoData);
         setTaskInfoData(taskInfoData);

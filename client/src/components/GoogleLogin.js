@@ -5,7 +5,7 @@ const GoogleLogin = () => {
   const handleGoogleLogin = async () => {
     try {
       // Redirect to the backend route that handles Google OAuth2 flow
-      window.location.href = 'http://localhost:5000/auth/google';
+      window.location.href = '/auth/google';
     } catch (error) {
       console.error(error);
     }

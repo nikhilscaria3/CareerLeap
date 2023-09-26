@@ -24,7 +24,7 @@ export function WeekTaskInfoCreate() {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:5000/createtaskinfo', {
+      const response = await axios.post('/createtaskinfo', {
         name,
         taskinfo,
       });

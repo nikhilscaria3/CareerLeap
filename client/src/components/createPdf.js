@@ -24,7 +24,7 @@ const PDFUploader = () => {
         formData.append('pdf', file);
 
         try {
-            await axios.post('http://localhost:5000/api/pdf/upload', formData, {
+            await axios.post('/api/pdf/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
@@ -42,7 +42,7 @@ const PDFUploader = () => {
     useEffect(() => {
         const fetchPdfs = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/pdf');
+                const response = await axios.get('/api/pdf');
                 setPdfs(response.data);
             } catch (err) {
                 console.error(err);
@@ -58,7 +58,7 @@ const PDFUploader = () => {
     // Function to handle PDF link click and set the selected PDF URL
     const handlePdfLinkClick = (event, pdfPath) => {
         event.preventDefault();
-        setSelectedPdfUrl(`http://localhost:5000/${pdfPath}`);
+        setSelectedPdfUrl(`/${pdfPath}`);
     };
 
     const handleLogout = () => {

@@ -51,7 +51,7 @@ const YouTubeBrotoPlaylist = ({ apiKey }) => {
   useEffect(() => {
     const fetchPlaylist = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/getBrotoplaylist');
+        const response = await axios.get('/getBrotoplaylist');
         const data = response.data;
 
         if (Array.isArray(data.dbcategory)) {

@@ -26,7 +26,7 @@ const GetPdf = () => {
     useEffect(() => {
         const fetchPdfs = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/pdf');
+                const response = await axios.get('/api/pdf');
                 setPdfs(response.data);
             } catch (err) {
                 console.error(err);
@@ -42,7 +42,7 @@ const GetPdf = () => {
     // Function to handle PDF link click and set the selected PDF URL
     const handlePdfLinkClick = (event, pdfPath) => {
         event.preventDefault();
-        setSelectedPdfUrl(`http://localhost:5000/${pdfPath}`);
+        setSelectedPdfUrl(`/${pdfPath}`);
     };
 
 

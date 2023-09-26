@@ -35,7 +35,7 @@ export function GlobalMessage() {
     const handlesendmessage = async () => {
         try {
             // Make sure to send the message inside an object with the appropriate key
-            const response = await axios.post("http://localhost:5000/api/setglobalmessage", {
+            const response = await axios.post("/api/setglobalmessage", {
                 message: message,
                 email: jwtemail,
                 adminemail: userEmailid
@@ -51,7 +51,7 @@ export function GlobalMessage() {
         const handlegetmessage = async () => {
             try {
                 // Make sure to send the message inside an object with the appropriate key
-                const response = await axios.get(`http://localhost:5000/api/getglobalmessage`);
+                const response = await axios.get(`/api/getglobalmessage`);
                 console.log("response", response.data);
                 setresponsemesssage(response.data.message)
             } catch (error) {

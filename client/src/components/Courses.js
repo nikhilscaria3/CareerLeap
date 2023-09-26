@@ -78,7 +78,7 @@ const CoursePage = () => {
             const token = localStorage.getItem('jwtLoginToken');
             try {
                 setAuthToken(token);
-                const response = await axios.get(`http://localhost:5000/api/courses`, {
+                const response = await axios.get(`/api/courses`, {
                     params: {
                         page: currentPage,
                         pageSize: pageSize,

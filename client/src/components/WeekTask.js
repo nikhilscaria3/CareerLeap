@@ -32,7 +32,7 @@ export function WeekTask() {
   useEffect(() => {
     const fetchTimerDataFromBackend = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/getTimerData");
+        const response = await axios.get("/api/getTimerData");
         setDaysRemaining(response.data.remainingDays);
         console.log("Timer data fetched from the backend!");
       } catch (error) {
@@ -55,7 +55,7 @@ export function WeekTask() {
   useEffect(() => {
     const userdata = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getuserdata/${jwtemail}`, {
+        const response = await axios.get(`/getuserdata/${jwtemail}`, {
           params: { jwtemail }
         });
 
@@ -78,7 +78,7 @@ export function WeekTask() {
   useEffect(() => {
     const fetchTaskInfo = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/gettaskinfoweek");
+        const response = await axios.get("/gettaskinfoweek");
         const taskInfoData = response.data.data; // Access the 'data' property here
         console.log("taskInfoData:", taskInfoData);
         console.log("Type of taskInfoData:", typeof taskInfoData);

@@ -91,7 +91,7 @@ function DisplayQuestions() {
 
   const fetchQuestions = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/questions');
+      const response = await axios.get('/questions');
       const data = response.data;
       console.log(data);
       setQuestions(data);
@@ -123,7 +123,7 @@ function DisplayQuestions() {
       console.log('Total Marks:', totalMarks);
 
       // Submit user answers
-      const answersResponse = await axios.post('http://localhost:5000/addAnswers', {
+      const answersResponse = await axios.post('/addAnswers', {
         questions: questions.map(question => question.question),
         userAnswers,
         useremail: jwtemail,
@@ -142,7 +142,7 @@ function DisplayQuestions() {
         fetchQuestions();
 
         // Now, submit user score
-        const scoreResponse = await axios.post('http://localhost:5000/submitscore', {
+        const scoreResponse = await axios.post('/submitscore', {
           useremail: jwtemail,
           userScore: totalMarks
         });

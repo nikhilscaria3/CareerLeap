@@ -146,7 +146,7 @@ export default function AdminPage() {
                 if (editCourseId) {
                     // If editCourseId is set, it means we are updating an existing course
                     await axios.put(
-                        `http://localhost:5000/api/courses/${editCourseId}`,
+                        `/api/courses/${editCourseId}`,
                         values
                     );
                     setEditCourseId(null);
@@ -157,7 +157,7 @@ export default function AdminPage() {
                 }
 
                 // After successful submission, fetch the updated course list from the backend API
-                const response = await fetch("http://localhost:5000/api/courses", {
+                const response = await fetch("/api/courses", {
                     method: "GET"
                 });
 

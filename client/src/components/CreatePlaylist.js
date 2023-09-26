@@ -77,7 +77,7 @@ export function CreatePlaylists() {
 
         if (inputs) {
             try {
-                const response = await fetch('http://localhost:5000/CreatePlaylist', {
+                const response = await fetch('/CreatePlaylist', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(inputs),

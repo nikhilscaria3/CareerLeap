@@ -79,7 +79,7 @@ export function ManifestUser() {
             const token = localStorage.getItem('jwtLoginToken');
             try {
                 setAuthToken(token);
-                const response = await axios.get("http://localhost:5000/api/manifest");
+                const response = await axios.get("/api/manifest");
 
                 if (!response.data) {
                     throw new Error("Failed to fetch data from the server.");

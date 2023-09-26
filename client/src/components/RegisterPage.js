@@ -108,7 +108,7 @@ export function RegisterPage() {
         console.log(accessToken);
 
         try {
-            const response = await fetch("http://localhost:5000/GoogleRegister", {
+            const response = await fetch("/GoogleRegister", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

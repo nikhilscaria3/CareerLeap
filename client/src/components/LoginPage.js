@@ -115,7 +115,7 @@ export function LoginPage() {
         setAccessToken(accessToken);
 
         try {
-            const response = await fetch("http://localhost:5000/GoogleLogin", {
+            const response = await fetch("/GoogleLogin", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
