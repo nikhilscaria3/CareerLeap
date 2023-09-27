@@ -29,26 +29,26 @@ function Elearning() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          // Handle form submission here (e.g., send data to a server or perform some action)
-          const response = await axios.post('/enquiry', {
-            formData,
-          });
-      
-          setmessage(response.data.message);
-      
-          // Reset the form fields to empty values
-          setFormData({
-            name: '',
-            email: '',
-            phone: '',
-            message: '',
-          });
+            // Handle form submission here (e.g., send data to a server or perform some action)
+            const response = await axios.post('/enquiry', {
+                formData,
+            });
+
+            setmessage(response.data.message);
+
+            // Reset the form fields to empty values
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                message: '',
+            });
         } catch (error) {
-          // Handle the error appropriately
-          console.error('Form Submission Error:', error);
+            // Handle the error appropriately
+            console.error('Form Submission Error:', error);
         }
-      };
-      
+    };
+
 
     useEffect(() => {
         AOS.init({
@@ -83,23 +83,24 @@ function Elearning() {
 
                         {/* Replace anchor tags with React Router Links if needed */}
                         <a href="#enquirycontainer" className="nav-item nav-link">Contact</a>
+                        <a href="/register" className="nav-item nav-link">Register</a>
                     </div>
                     {/* Replace anchor tags with React Router Links if needed */}
                     <a href="/register" className="btn btn-primary py-3 px-lg-4 d-none d-lg-block">Join Now<i className="fa fa-arrow-right ms-3"></i></a>
                 </div>
             </nav>
 
-            <div id="carouselExample" class="carousel slide">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src={image} class="d-block w-100" alt="..." />
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style={{ background: "rgba(24, 29, 56, .7)" }} >
-                            <div class="carouselheadcontainers p-4 m-auto">
-                                <div class="row justify-content-center">
-                                    <div class="col-sm-10 col-lg-10 ">
-                                        <h5 class="text-primary m-auto row justify-content-center text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                        <h1 class="display-2 m-auto fw-bold text-white animated slideInDown">The Best Online Learning Platform</h1>
-                                        <p class="fs-5 text-white mb-4 pb-2">"Exploring the Vast World of Knowledge and Learning Through a Multifaceted Platform Designed to Inspire and Empower Students of All Ages and Backgrounds."</p>
+            <div id="carouselExample" className="carousel slide">
+                <div className="carousel-inner">
+                    <div className="carousel-item active">
+                        <img src={image} className="d-block w-100" alt="..." />
+                        <div className="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style={{ background: "rgba(24, 29, 56, .7)" }}>
+                            <div className="carouselheadcontainers p-4 m-auto">
+                                <div className="row justify-content-center">
+                                    <div className="col-md-10 col-lg-8"> {/* Adjust columns for small screens */}
+                                        <h5 className="text-primary m-auto row justify-content-center text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
+                                        <h1 className="display-2 m-auto fw-bold text-white animated slideInDown">The Best Online Learning Platform</h1>
+                                        <p className="fs-5 text-white mb-4 pb-2">"Exploring the Vast World of Knowledge and Learning Through a Multifaceted Platform Designed to Inspire and Empower Students of All Ages and Backgrounds."</p>
                                         <a href="" className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
                                         <a href="/register" className="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
                                     </div>
@@ -107,33 +108,19 @@ function Elearning() {
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src={image} class="d-block w-100" alt="..." />
-                        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style={{ background: "rgba(24, 29, 56, .7)" }} >
-                            <div class="carouselheadcontainers p-4 m-auto">
-                                <div class="row justify-content-center">
-                                    <div class="col-sm-10 col-lg-10">
-                                        <h5 class="text-primary row justify-content-center  text-uppercase mb-3 animated slideInDown">Best Online Courses</h5>
-                                        <h1 class="display-2 m-auto fw-bold text-white animated slideInDown">The Best Online Learning Platform</h1>
-                                        <p class="fs-5 text-white mb-4 pb-2">"Exploring the Vast World of Knowledge and Learning Through a Multifaceted Platform Designed to Inspire and Empower Students of All Ages and Backgrounds."</p>
-                                        <a href="" className="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Read More</a>
-                                        <a href="/register" className="btn btn-light py-md-3 px-md-5 animated slideInRight">Join Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    {/* Add more carousel items as needed */}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span className="visually-hidden">Next</span>
                 </button>
             </div>
+
+
 
             <div class="container-lg py-5">
                 <div class="container-fluid" data-aos="zoom-in">
@@ -220,7 +207,7 @@ function Elearning() {
             </div>
 
 
-            <div className="container-fluid" id='courseside'>
+            <div className="container" id='courseside'>
                 <h1 class=" m-auto row justify-content-center fw-bold text-dark animated slideInDown">Course</h1>
                 <div class="coursehomecontainer mt-4" data-aos="fade-up">
                     <div class="box" style={{ color: "#fc5f9b" }}>
@@ -294,7 +281,7 @@ function Elearning() {
 
 
 
-            <div class="container-fluid mt-5 p-5" data-aos="fade-up-left">
+            <div class="container-fluid mt-5 " data-aos="fade-up-left">
                 <div class="row">
                     <div className="text-center">
                         <h6 className="section-title text-center text-primary px-3">Testimonial</h6>
@@ -448,9 +435,9 @@ function Elearning() {
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <h4 class="text-white mb-3">Contact</h4>
-                            <p class="mb-2 text-white"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                            <p class="mb-2 text-white"><i class="fa fa-map-marker-alt me-3"></i>Maradu, Kerala, India</p>
                             <p class="mb-2 text-white"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                            <p class="mb-2 text-white"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                            <p class="mb-2 text-white"><i class="fa fa-envelope me-3"></i>info@brototype.com</p>
                             <div class="d-flex pt-2">
                                 <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                                 <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>

@@ -1,13 +1,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700;800;900&display=swap');
 
-.coursehomecontainer {
-  width: 50%;
-  display: grid;
-  align-items: center;
-  margin: auto;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  grid-gap: 3rem;
+
+
+@media (max-width: 720px) {
+  .coursehomecontainer {
+    display: grid;
+    align-items: center;
+    margin: auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 3rem;
+  }
+
 }
+
+
+@media (min-width: 720px) {
+  .coursehomecontainer {
+    display: grid;
+    align-items: center;
+    margin: auto;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 3rem;
+  }
+
+}
+
 
 
 .box {
