@@ -72,7 +72,7 @@ export function AdminLoginPage() {
 
     return (
         <section className="adminlogin-block">
-            <div className="container">
+            <div className="login-container">
                 <div className="row">
                     <div className="col login-sec">
                         <h2 className="text-center">Admin Login Now</h2>
