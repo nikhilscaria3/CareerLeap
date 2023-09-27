@@ -208,7 +208,7 @@ console.log("jwt",jwtemail);
   return (
     <div className="profile-container">
       <h1 className="navbrand text-center text-primary mt-4">Welcome to your profile</h1>
-      <div className="user-profile d-flex justify-content-center align-items-start">
+      <div className="user-profile ">
         {/* Profile Image */}
         <div className="profile-image text-center">
           <div className="uploadedimage">
@@ -220,7 +220,7 @@ console.log("jwt",jwtemail);
           </div>
 
           {/* File Upload */}
-          <div className="file-upload-container mt-2">
+          <div className="file-upload-container ">
             <label htmlFor="fileInput" className="file-input-label">
               <FontAwesomeIcon icon={faCamera} />
             </label>
@@ -266,7 +266,7 @@ console.log("jwt",jwtemail);
 
       {/* Score Container */}
       {score && (
-        <div className={`score-container mt-4 ${score >= 5 ? 'text-success' : 'text-danger'}`}>
+        <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
           {score >= 5 ? (
             <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
           ) : (
