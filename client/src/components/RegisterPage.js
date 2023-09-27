@@ -135,7 +135,7 @@ export function RegisterPage() {
     return (
         
         <section className="register-block" >
-            <div className="register-ccontainer">
+            <div className="register-container">
                 <div className="row ">
                     <div className="col register-sec">
                         <img className="form-register-logo" src={careerleaplogo} alt="Form Logo" />

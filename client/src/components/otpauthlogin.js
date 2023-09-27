@@ -98,10 +98,10 @@ const OTPForm = () => {
 
     return (
         <section className="otp-block">
-            <div className="container">
+            <div className="otp-container">
                 <div className="row">
                     <div className="col login-sec">
-                        <img className="form-login-logo" src={careerleaplogo} alt="Form Logo" />
+                        <img className="form-otp-logo" src={careerleaplogo} alt="Form Logo" />
                         <h2 className="text-center">Verify OTP</h2>
                         <form onSubmit={handleSubmit}>
                             <div className="inputContainer">
