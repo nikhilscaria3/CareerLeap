@@ -164,9 +164,9 @@ export function LoginPage() {
 
     return (
         <section className="login-block">
-            <div className="container">
+            <div className="login-container">
                 <div className="row">
-                    <div className="col login-sec">
+                    <div className="col-lg login-sec">
                         <img className="form-login-logo" src={careerleaplogo} alt="Form Logo" />
                         <h2 className="text-center">Login Now</h2>
                         <form className="login-form" action="">
