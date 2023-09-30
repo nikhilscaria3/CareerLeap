@@ -285,7 +285,10 @@ const ProfilePage = () => {
       <div className="user-button mt-4">
         {fetchid && <button onClick={handlenavigatecourse} className="btn btn-primary mr-2">Courses</button>}
         {!score && <button onClick={handletoggle} className="btn btn-primary mr-2">Fumigation</button>}
-        {score && <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>}
+        {score !== null && (
+          <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>
+        )}
+
         <button onClick={handleLogout} className="btn btn-danger">Logout</button>
       </div>
 
