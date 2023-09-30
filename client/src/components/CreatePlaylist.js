@@ -137,7 +137,7 @@ export function CreatePlaylists() {
             </div>
         </nav>
         <section className="login-block">
-            <div className="container">
+            <div className="login-container">
                 <div className="row">
                     <div className="col login-sec">
                         <h2 className="text-center">Create Playlist Now</h2>
