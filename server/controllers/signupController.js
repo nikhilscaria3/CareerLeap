@@ -26,6 +26,7 @@ exports.registerUser = async (req, res) => {
       name,
       email,
       status: "Fumigation",
+      week: "Week 1",
       password: hashedPassword,
     });
 
@@ -62,7 +63,7 @@ exports.googleRegister = async (req, res) => {
     if (existingUser)
       return res.status(400).json({ message: "User already exists!" });
 
-    const result = await User.create({ verified: "true", email, firstName, lastName, profilePicture: picture });
+    const result = await User.create({ verified: "true", email, firstName, lastName, week: "Week 1", profilePicture: picture });
 
     return res.status(200).json({ data: result });
   } catch (error) {
