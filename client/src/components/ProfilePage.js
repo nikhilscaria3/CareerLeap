@@ -24,7 +24,7 @@ const ProfilePage = () => {
   // Step 3: Extract the original loginUserData f const timestamp = decodedData.substring(0, 13); // Assuming the timestamp is 13 digits
   const jwtemail = decodedData.substring(13); // Extracting data after the timestamp
 
-console.log("jwt",jwtemail);
+  console.log("jwt", jwtemail);
 
   const [profileData, setProfileData] = useState({
     email: userData?.data || "",
@@ -74,7 +74,7 @@ console.log("jwt",jwtemail);
         setAuthToken(token);
         const response = await axios.get(`/getuserdata/${jwtemail}`, {
           params: { jwtemail }
-          
+
         });
         const data = response.data;
         console.log("data gett", response.data);
@@ -155,7 +155,7 @@ console.log("jwt",jwtemail);
     return new Date().getTime() > expiration;
   };
 
-  
+
   const removeTokenFromLocalStorage = () => {
     localStorage.removeItem('jwtLoginToken');
   };
@@ -204,7 +204,7 @@ console.log("jwt",jwtemail);
     navigate('/courses')
   }
 
-  
+
   return (
     <div className="profile-container">
       <h1 className="navbrand text-center text-primary mt-4">Welcome to your profile</h1>
@@ -258,29 +258,28 @@ console.log("jwt",jwtemail);
             ) : (
               <p>Email: {email}</p>
             )}
-            <br/>
+            <br />
             {fetchid ? <p>ID: {fetchid}</p> : "Id: Not Available"}
           </div>
         </div>
       </div>
 
-      {/* Score Container */}
-      {score && (
-        <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
-          {score >= 5 ? (
-            <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
-          ) : (
-            <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
-          )}
-        </div>
-      )}
+      <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
+        {score >= 5 ? (
+          <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
+        ) : (
+          <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
+        )}
+      </div>
+
 
       {/* Administrator Message Container */}
-      {score && score < 5 && (
+      {score !== null && score < 5 && (
         <div className="administratormessaage-container mt-2">
           <h5 className="administrator-message">Please contact your administrator for further information.</h5>
         </div>
       )}
+
 
       {/* User Button Container */}
       <div className="user-button mt-4">
