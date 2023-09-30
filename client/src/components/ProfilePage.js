@@ -276,7 +276,7 @@ const ProfilePage = () => {
         </div>
       )}
 
-      <p>score {score}</p>
+     
       {/* Administrator Message Container */}
       {score !== null && score < 5 && (
         <div className="administratormessaage-container mt-2">
