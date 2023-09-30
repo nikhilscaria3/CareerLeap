@@ -264,15 +264,19 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
-        {score >= 5 ? (
-          <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
-        ) : (
-          <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
-        )}
-      </div>
 
+      {score !== null && score !== undefined && (
+        <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
+          {score >= 5 ? (
+            <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
+          ) : (
 
+            <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
+          )}
+        </div>
+      )}
+
+      <p>score {score}</p>
       {/* Administrator Message Container */}
       {score !== null && score < 5 && (
         <div className="administratormessaage-container mt-2">
@@ -285,10 +289,7 @@ const ProfilePage = () => {
       <div className="user-button mt-4">
         {fetchid && <button onClick={handlenavigatecourse} className="btn btn-primary mr-2">Courses</button>}
         {!score && <button onClick={handletoggle} className="btn btn-primary mr-2">Fumigation</button>}
-        {score !== null && (
-          <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>
-        )}
-
+        {score && <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>}
         <button onClick={handleLogout} className="btn btn-danger">Logout</button>
       </div>
 
