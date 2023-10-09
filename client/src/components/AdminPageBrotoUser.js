@@ -11,8 +11,9 @@ import { removeLoggedInEmailFromCookie } from '../cookieUtils';
 
 export function AdminUserInfo() {
     const [userinfo, setUserinfo] = useState([]);
-    const [week, setWeek] = useState(null); // Initialize week as an empty object
+    const [week, setWeek] = useState({}); // Initialize week as an empty object
     const [message, setMessage] = useState(null)
+    const [errorMessage, setErrorMessage] = useState("");
     const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState("");
     const userEmailid = getLoggedInEmailFromCookie();
@@ -85,7 +86,15 @@ export function AdminUserInfo() {
 
 
     const handleweeksave = async (email) => {
-        console.log("week", week.email);
+        // Check if the input field is empty
+        if (!week.email) {
+            setErrorMessage("Week field cannot be empty");
+            return;
+        }
+
+        // Clear any previous error message if input is not empty
+        setErrorMessage("");
+
         try {
             // Make the POST request to update the user's data
             const response = await axios.post("/admin/userupdate", {
@@ -94,13 +103,14 @@ export function AdminUserInfo() {
             });
 
             console.log(response.data.message);
-            setMessage(response.data.message)
-            setWeek(initialdata)
+            setMessage(response.data.message);
+            setWeek(initialdata);
         } catch (error) {
             // Handle error or show an error message
             console.error("Error fetching data:", error);
         }
     };
+
 
     const handleLogout = () => {
         localStorage.removeItem("jwtAdminToken");
@@ -187,10 +197,11 @@ export function AdminUserInfo() {
                 </div>
 
                 <p>{message}</p>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <table className="user-table">
                     <thead>
                         <tr>
-                           
+
                             <th>Name</th>
                             <th>Email</th>
                             <th>Status</th>
@@ -211,7 +222,7 @@ export function AdminUserInfo() {
                         ) : (
                             filteredUsers.map((item, index) => (
                                 <tr key={index + 1}>
-                                    
+
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
                                     <td>{item.status}</td>
@@ -223,10 +234,9 @@ export function AdminUserInfo() {
                                     <td>
                                         {/* Pass the user ID and week value to handleweeksave */}
                                         <button onClick={() => handleweeksave(item.email, week[item.email]?.week)}>Save</button>
-
                                     </td>
                                     <td><button onClick={() => manifestnavigate(item.email, item.week)}>Manifest</button></td>
-                               
+
                                     <td><button onClick={() => realtimemessagenavigate(item.email, item.name)}>Chat</button></td>
                                 </tr>
                             ))
