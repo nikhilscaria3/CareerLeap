@@ -1,5 +1,5 @@
 
-# Introducing CareerLeap 🚺🚕 - Prioritizing Education and Convenience 🌟
+# Introducing CareerLeap  - Prioritizing Education and Convenience 🌟
 
 Welcome to CareerLeap, a client-side application built with React, TypeScript, and Node as part of the MERN stack. CareerLeap is a skill-focused educational service that prioritizes programming and convenience, designed to empower students to learn with confidence. 
 
