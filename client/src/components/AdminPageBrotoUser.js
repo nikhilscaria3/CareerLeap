@@ -218,7 +218,7 @@ export function AdminUserInfo() {
                                     <td>{item.userid}</td>
                                     <td>{item.week}</td>
                                     <td>
-                                        <input type="text" className="form-control" name="email" onChange={handleChange} placeholder="Week" />
+                                        <input type="text" className="form-control" name="email" onChange={handleChange} placeholder="Update User Week" />
                                     </td>
                                     <td>
                                         {/* Pass the user ID and week value to handleweeksave */}

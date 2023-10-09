@@ -330,7 +330,7 @@ export function ManifestAdmin() {
                             name="code"
                             value={values.code}
                             onChange={handleChange}
-                            placeholder="Code"
+                            placeholder="Code Score"
                         />
                         {errors.code && <span className="error">{errors.code}</span>}
 
@@ -339,7 +339,7 @@ export function ManifestAdmin() {
                             name="theory"
                             value={values.theory}
                             onChange={handleChange}
-                            placeholder="Theory"
+                            placeholder="Theory Score"
                         />
                         {errors.theory && <span className="error">{errors.theory}</span>}
 
