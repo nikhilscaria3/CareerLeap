@@ -216,12 +216,10 @@ const ProfilePage = () => {
               {selectedFile ? (
                 <img src={URL.createObjectURL(selectedFile)} alt="Profile Pic" className="img-fluid rounded-circle" />
               ) : (
-                <img src={images} alt="No Profile" className="img-fluid rounded-circle" />
-
+                imageUrl && <img src={imageUrl} alt="Uploaded File" className="img-fluid rounded-circle" />
               )}
-             
-              {imageUrl && <img src={imageUrl} alt="Uploaded File" />}
             </div>
+
 
             {/* File Upload */}
             <div className="file-upload-container ">
