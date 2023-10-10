@@ -35,7 +35,6 @@ import CameraFeed from './components/camera';
 import OTPForm from './components/otpauthlogin';
 import GoogleLogin from './components/GoogleLogin';
 import GoogleCallback from './components/GoogleCallback';
-import ProfilePageCopy from './components/ProfilePage copy';
 import Elearning from './components/homepage';
 import { PrivateRoute, PrivateAdminRoute } from './components/PrivateRoutes';
 
@@ -90,8 +89,7 @@ function App() {
         <Route path="/Receiver" element={<PrivateRoute component={ReceiverChat} />} />
         <Route path="/PythonCompiler" element={<PrivateRoute component={PythonCompiler} />} />
         <Route path="/camera" element={<PrivateRoute component={CameraFeed} />} />
-        <Route path="/copy" element={<PrivateRoute component={ProfilePageCopy} />} />
-
+    
       </Routes>
     </BrowserRouter>
   );

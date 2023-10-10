@@ -24,7 +24,7 @@ function DisplayQuestions() {
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [stream, setStream] = useState(null);
   const [isContentVisible, setIsContentVisible] = useState(false);
-  const [timer, setTimer] = useState(10); // Set an initial timer value in seconds
+  const [timer, setTimer] = useState(15); // Set an initial timer value in seconds
   const [timerActive, setTimerActive] = useState(false); // Track if the timer is active
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(null)
   const [isCameraCountdownActive, setIsCameraCountdownActive] = useState(false);
@@ -190,7 +190,7 @@ function DisplayQuestions() {
         if (prevTimer === 1) {
           clearInterval(timerInterval); // Clear the timer interval
           moveToNextQuestion(); // Move to the next question when the timer reaches 0
-          return 10; // Reset the timer for the next question
+          return 15; // Reset the timer for the next question
         } else {
           return prevTimer - 1;
         }
@@ -212,7 +212,7 @@ function DisplayQuestions() {
       setTimerStopped(true);   // If it's the last question, do nothing when the timer ends
     } else {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-      setTimer(10); // Reset the timer for the next question
+      setTimer(15); // Reset the timer for the next question
     }
   };
 

@@ -10,6 +10,20 @@ img {
   box-sizing: border-box;
 }
 
+
+.main-section {
+  height: 100vh;
+  width: 100vw;
+  background-image: url("https://d2y3cuhvusjnoc.cloudfront.net/bee1ece779b9eae59b57ae67d6f40a26.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 @media (max-width: 720px) {
   .profile-container {
 
@@ -17,14 +31,14 @@ img {
     height: 100%;
     margin: 0 auto;
     padding: 20px;
+    border-radius: 1rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #282a36;
+    background-color: #ffffff;
     font-family: Arial, sans-serif;
-    box-shadow: 3px 13px 20px 3px rgba(0, 0, 0.5, 1);
-
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 6px 6px rgba(0, 0, 0, 0.3);
   }
 
   .user-profile {
@@ -34,19 +48,19 @@ img {
   }
 
   .user-info {
-  
+
     margin-left: 10px;
     position: relative;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
-  
+
 
   .score-container {
     margin-top: 10px;
     justify-content: center;
     display: flex;
     background-color: #ffffff;
-    border: 1px solid #858383;
+    border: 1px solid #0f0707;
     padding: 17px 12px;
     color: black;
     border-radius: 1rem;
@@ -61,16 +75,16 @@ img {
   .profile-container {
     max-width: 100%;
     width: 60%;
+    border-radius: 1rem;
     margin: 0 auto;
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #282a36;
+    background-color: #ffffff;
     font-family: Arial, sans-serif;
-    box-shadow: 3px 13px 20px 3px rgba(0, 0, 0.5, 1);
-
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5), 0 6px 6px rgba(0, 0, 0, 0.3);
   }
 
   .user-profile {
@@ -83,16 +97,19 @@ img {
     flex: 1;
     margin-left: 20px;
     position: relative;
+    border: 1px solid #090505;
+    border-style: groove;
+    border-radius: 1rem;
     top: 37px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
   }
-  
+
   .score-container {
     justify-content: center;
     display: flex;
     margin: auto;
     background-color: #ffffff;
-    border: 1px solid #858383;
+    border: 1px solid #090505;
     padding: 17px 12px;
     color: black;
     border-radius: 1rem;
@@ -140,9 +157,8 @@ img {
 .uploadedimage {
   border: 1px solid #ccc;
   text-align: center;
-  background-color: #f0f0f0;
-  border-radius: 10%;
   width: 300px;
+  border-radius: 50%;
   height: 300px;
   display: flex;
   justify-content: center;
@@ -156,7 +172,7 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 10%;
+  border-radius: 50%;
 }
 
 /* Style the file upload input and button */

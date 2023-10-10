@@ -206,8 +206,9 @@ const ProfilePage = () => {
 
 
   return (
+    <div className='main-section'>
     <div className="profile-container">
-      <h1 className="navbrand text-center text-primary mt-4">Welcome to your profile</h1>
+      <h1 className="navbrand text-center text-primary mt-4">Welcome To Your Profile</h1>
       <div className="user-profile ">
         {/* Profile Image */}
         <div className="profile-image text-center">
@@ -251,7 +252,7 @@ const ProfilePage = () => {
         {/* User Info */}
         <div className="user-info ml-4">
           <div className="user-card">
-            <h2 className='nametagheading'>User Information</h2>
+            <h2 className='nametagheading'>About</h2>
             {userData && userData.error && <p>{userData.error}</p>}
             {userData && userData.data ? (
               <p>Email: {userData.data}</p>
@@ -306,6 +307,7 @@ const ProfilePage = () => {
           <button onClick={handleClose} className="btn btn-secondary">Close</button>
         </div>
       )}
+    </div>
     </div>
   );
 };

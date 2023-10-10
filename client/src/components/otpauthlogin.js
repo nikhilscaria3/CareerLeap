@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { PinInput, PinInputField, HStack } from "@chakra-ui/react";
 import { useLocation, useNavigate } from 'react-router-dom';
 import careerleaplogo from '../views/careerleaplogo2.png';
 import '../styles/otppage.css';
 
 const OTPForm = () => {
-    const [otp, setOtp] = useState('');
+    const [otp, setOtp] = useState("");
+    // Initialize OTP as an array of empty strings
     const [message, setMessage] = useState(null);
     const location = useLocation();
     const userData = location.state?.data;
     const navigate = useNavigate();
     const [seconds, setSeconds] = useState(60);
     const [resendEnabled, setResendEnabled] = useState(false);
+
+   
+    const handleOtpChange = (index, newValue) => {
+        const newOtp = [...otp.toString()];
+        newOtp[index] = newValue.toString();
+        setOtp(newOtp.join(""));
+      };
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -63,7 +73,7 @@ const OTPForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(otp);
         try {
             const otpVerificationResponse = await axios.post('/loginverifyotp', { email: userData.data, otp });
 
@@ -72,7 +82,7 @@ const OTPForm = () => {
             if (otpVerificationResponse.data && otpVerificationResponse.data.success) {
                 const { token } = otpVerificationResponse.data;
                 // Store the token in localStorage
-                console.log("toekn",token);
+                console.log("toekn", token);
                 const loginUserData = otpVerificationResponse.data.data; // Replace this with your actual data
                 const timestamp = Date.now();
                 const emailIdWithTimestamp = timestamp + loginUserData;
@@ -96,6 +106,7 @@ const OTPForm = () => {
         }
     };
 
+
     return (
         <section className="otp-block">
             <div className="otp-container">
@@ -109,9 +120,25 @@ const OTPForm = () => {
                                 <input type="email" className="form-control" name="email" value={userData.data} disabled placeholder="email" />
                             </div>
                             <div className="inputContainer">
+                               
                                 <label htmlFor="exampleInputPassword1" className="text-uppercase">OTP</label>
-                                <input className="form-control" value={otp} type="text" name="otp" onChange={(e) => setOtp(e.target.value)} placeholder="OTP" />
+                             
+                                <HStack>
+                                    <PinInput otp placeholder="">
+                                        {[...Array(6)].map((_, index) => (
+                                            <PinInputField
+                                                key={index}
+                                                onChange={(e) => handleOtpChange(index, parseInt(e.target.value))}
+                                            />
+                                        ))}
+                                    </PinInput>
+                                </HStack>
+
                             </div>
+
+
+
+
 
                             <button type="submit">Submit OTP</button>
 
