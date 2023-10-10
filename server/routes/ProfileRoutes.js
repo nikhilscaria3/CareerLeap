@@ -6,18 +6,25 @@ const path = require('path')
 const verifyToken = require('../auth.js');
 
 // Set up Multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
-  },
-  filename: function(req, file, callback) {
-    // Use the original file name with a timestamp to avoid naming conflicts
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    callback(null, uniqueSuffix + '-' + file.originalname);
-  }
-});
+// const storage = multer.diskStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, 'uploads/')
+//   },
+//   filename: function(req, file, callback) {
+//     // Use the original file name with a timestamp to avoid naming conflicts
+//     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+//     callback(null, uniqueSuffix + '-' + file.originalname);
+//   }
+// });
 
-const upload = multer({ storage: storage });
+// const upload = multer({ storage: storage });
+
+const storage = multer.memoryStorage();
+
+const upload = multer({
+  storage,
+ 
+});
 
 
 // Upload a user profile image
