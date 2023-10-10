@@ -77,7 +77,7 @@ const ProfilePage = () => {
 
         });
         const data = response.data;
-   
+
         setFile(response.data.profileimages)
         setemail(response.data.useremail)
         setuserresponseid(response.data.userid)
@@ -102,7 +102,7 @@ const ProfilePage = () => {
           params: { jwtemail }
         });
 
-       
+
         setScore(response.data.score)
         // Do something with the data here, e.g., set it to a state variable
         // Example: setUserData(data);
@@ -121,7 +121,7 @@ const ProfilePage = () => {
     const formData = new FormData();
     formData.append('file', selectedFile);
     formData.append('email', jwtemail)
-
+    console.log(jwtemail);
     // Make an API call to upload the file to the server
     const token = localStorage.getItem('jwtLoginToken');
     try {
@@ -207,107 +207,107 @@ const ProfilePage = () => {
 
   return (
     <div className='main-section'>
-    <div className="profile-container">
-      <h1 className="navbrand text-center text-primary mt-4">Welcome To Your Profile</h1>
-      <div className="user-profile ">
-        {/* Profile Image */}
-        <div className="profile-image text-center">
-          <div className="uploadedimage">
-            {selectedFile ? (
-              <img src={URL.createObjectURL(selectedFile)} alt="Profile Pic" className="img-fluid rounded-circle" />
-            ) : (
-              <img src={images} alt="No Profile" className="img-fluid rounded-circle" />
-            )}
-          </div>
-
-          {/* File Upload */}
-          <div className="file-upload-container ">
-            <label htmlFor="fileInput" className="file-input-label">
-              <FontAwesomeIcon icon={faCamera} />
-            </label>
-            <input
-              type="file"
-              id="fileInput"
-              className="file-input"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-            />
-            <button
-              className="upload-button btn btn-primary mt-2"
-              onClick={handleFileUpload}
-              disabled={!fileInputRef.current || !fileInputRef.current.value}
-            >
-              <FontAwesomeIcon icon={faUpload} /> Upload
-            </button>
-          </div>
-
-          {/* Message */}
-          {message && (
-            <div className="message mt-2">
-              <p>{message}</p>
+      <div className="profile-container">
+        <h1 className="navbrand text-center text-primary mt-4">Welcome To Your Profile</h1>
+        <div className="user-profile ">
+          {/* Profile Image */}
+          <div className="profile-image text-center">
+            <div className="uploadedimage">
+              {selectedFile ? (
+                <img src={URL.createObjectURL(selectedFile)} alt="Profile Pic" className="img-fluid rounded-circle" />
+              ) : (
+                <img src={images} alt="No Profile" className="img-fluid rounded-circle" />
+              )}
             </div>
-          )}
-        </div>
 
-        {/* User Info */}
-        <div className="user-info ml-4">
-          <div className="user-card">
-            <h2 className='nametagheading'>About</h2>
-            {userData && userData.error && <p>{userData.error}</p>}
-            {userData && userData.data ? (
-              <p>Email: {userData.data}</p>
-            ) : (
-              <p>Email: {email}</p>
+            {/* File Upload */}
+            <div className="file-upload-container ">
+              <label htmlFor="fileInput" className="file-input-label">
+                <FontAwesomeIcon icon={faCamera} />
+              </label>
+              <input
+                type="file"
+                id="fileInput"
+                className="file-input"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+              />
+              <button
+                className="upload-button btn btn-primary mt-2"
+                onClick={handleFileUpload}
+                disabled={!fileInputRef.current || !fileInputRef.current.value}
+              >
+                <FontAwesomeIcon icon={faUpload} /> Upload
+              </button>
+            </div>
+
+            {/* Message */}
+            {message && (
+              <div className="message mt-2">
+                <p>{message}</p>
+              </div>
             )}
-            <br />
-            {fetchid ? <p>ID: {fetchid}</p> : "Id: Not Available"}
+          </div>
+
+          {/* User Info */}
+          <div className="user-info ml-4">
+            <div className="user-card">
+              <h2 className='nametagheading'>About</h2>
+              {userData && userData.error && <p>{userData.error}</p>}
+              {userData && userData.data ? (
+                <p>Email: {userData.data}</p>
+              ) : (
+                <p>Email: {email}</p>
+              )}
+              <br />
+              {fetchid ? <p>ID: {fetchid}</p> : "Id: Not Available"}
+            </div>
           </div>
         </div>
+
+
+        {score !== null && score !== undefined && (
+          <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
+            {score >= 5 ? (
+              <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
+            ) : (
+
+              <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
+            )}
+          </div>
+        )}
+
+
+        {/* Administrator Message Container */}
+        {score !== null && score < 5 && (
+          <div className="administratormessaage-container mt-2">
+            <h5 className="administrator-message">Please contact your administrator for further information.</h5>
+          </div>
+        )}
+
+
+        {/* User Button Container */}
+        <div className="user-button mt-4">
+          {fetchid && <button onClick={handlenavigatecourse} className="btn btn-primary mr-2">Courses</button>}
+          {!score && <button onClick={handletoggle} className="btn btn-primary mr-2">Fumigation</button>}
+          {score && <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>}
+          <button onClick={handleLogout} className="btn btn-danger">Logout</button>
+        </div>
+
+        {/* Overlay */}
+        <div className={`dull-overlay ${isVisible ? 'show' : ''}`} />
+
+        {/* Profile Center Button Container */}
+        {isVisible && (
+          <div className="profilecenter-button-container mt-4">
+            <p>Your attendance is required for the upcoming fumigation session.</p>
+            <p>By attending, you acknowledge that the AI-controlled camera will be activated to monitor the session.</p>
+            <p>Any attempt to manipulate or disrupt the session will result in immediate termination.</p>
+            <button onClick={handlenavigatefumigation} className="btn btn-success mr-2">Ready To Attend</button>
+            <button onClick={handleClose} className="btn btn-secondary">Close</button>
+          </div>
+        )}
       </div>
-
-
-      {score !== null && score !== undefined && (
-        <div className={`score-container ${score >= 5 ? 'text-success' : 'text-danger'}`}>
-          {score >= 5 ? (
-            <p>Congratulations! You have passed the OOPS Section with a score of {score}/10 </p>
-          ) : (
-
-            <p>Unfortunately, you did not pass the OOPS Section. Your score is {score}/10.</p>
-          )}
-        </div>
-      )}
-
-     
-      {/* Administrator Message Container */}
-      {score !== null && score < 5 && (
-        <div className="administratormessaage-container mt-2">
-          <h5 className="administrator-message">Please contact your administrator for further information.</h5>
-        </div>
-      )}
-
-
-      {/* User Button Container */}
-      <div className="user-button mt-4">
-        {fetchid && <button onClick={handlenavigatecourse} className="btn btn-primary mr-2">Courses</button>}
-        {!score && <button onClick={handletoggle} className="btn btn-primary mr-2">Fumigation</button>}
-        {score && <button onClick={fumigationanswersnavigate} className="btn btn-primary mr-2">Answers</button>}
-        <button onClick={handleLogout} className="btn btn-danger">Logout</button>
-      </div>
-
-      {/* Overlay */}
-      <div className={`dull-overlay ${isVisible ? 'show' : ''}`} />
-
-      {/* Profile Center Button Container */}
-      {isVisible && (
-        <div className="profilecenter-button-container mt-4">
-          <p>Your attendance is required for the upcoming fumigation session.</p>
-          <p>By attending, you acknowledge that the AI-controlled camera will be activated to monitor the session.</p>
-          <p>Any attempt to manipulate or disrupt the session will result in immediate termination.</p>
-          <button onClick={handlenavigatefumigation} className="btn btn-success mr-2">Ready To Attend</button>
-          <button onClick={handleClose} className="btn btn-secondary">Close</button>
-        </div>
-      )}
-    </div>
     </div>
   );
 };
