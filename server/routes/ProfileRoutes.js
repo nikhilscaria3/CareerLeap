@@ -10,13 +10,12 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, path.join(__dirname, '../uploads')); // Adjust the destination path here
   },
-  filename: function (req, file, cb) {
-    // Generate a unique filename here, for example:
+  filename: function(req, file, callback) {
+    // Use the original file name with a timestamp to avoid naming conflicts
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
+    callback(null, uniqueSuffix + '-' + file.originalname);
   }
 });
-
 
 const upload = multer({ storage: storage });
 
