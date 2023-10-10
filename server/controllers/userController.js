@@ -8,16 +8,20 @@ const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 // Upload a user profile image
 exports.uploadUserProfileImage = async (req, res) => {
   try {
+
     if (!req.file) {
+      console.log("not found the file")
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
+    console.log(req.file);
     const { email } = req.body;
 
     // Find the user in the database based on the provided email
     const user = await User.findOne({ email });
 
     if (!user) {
+      console.log("user not found");
       return res.status(404).json({ error: 'User not found' });
     }
 
