@@ -35,7 +35,7 @@ export function LoginPage() {
     const user = useSelector((state) => state.loginUser.loginUser); // Update this line
 
     useEffect(() => {
-        console.log("user", user);
+       
     }, [user]); // Add 'user' to the dependency array
 
     const [message, setMessage] = useState(null)
@@ -56,7 +56,7 @@ export function LoginPage() {
 
     const handleinputs = (e) => {
         const { name, value } = e.target;
-        console.log("Updating state:", name, value);
+
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     };
 
@@ -86,7 +86,7 @@ export function LoginPage() {
                     // Clear the form fields on successful login
                     setFormData({ email: '', password: '' });
                     setOtpformVisible(true)
-                    console.log("users", userData.success);
+                  
                     // This will prevent the back button from going back to the login page
                     navigate('/loginotp', { state: { data: userData }, replace: true });
                 }
@@ -111,7 +111,7 @@ export function LoginPage() {
 
     async function handleGoogleLoginSuccess(tokenResponse) {
         const accessToken = tokenResponse.access_token;
-        console.log(accessToken);
+     
         setAccessToken(accessToken);
 
         try {

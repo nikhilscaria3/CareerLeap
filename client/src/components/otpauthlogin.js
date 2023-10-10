@@ -73,16 +73,15 @@ const OTPForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(otp);
+ 
         try {
             const otpVerificationResponse = await axios.post('/loginverifyotp', { email: userData.data, otp });
 
-            console.log(otpVerificationResponse.data);
 
             if (otpVerificationResponse.data && otpVerificationResponse.data.success) {
                 const { token } = otpVerificationResponse.data;
                 // Store the token in localStorage
-                console.log("toekn", token);
+     
                 const loginUserData = otpVerificationResponse.data.data; // Replace this with your actual data
                 const timestamp = Date.now();
                 const emailIdWithTimestamp = timestamp + loginUserData;

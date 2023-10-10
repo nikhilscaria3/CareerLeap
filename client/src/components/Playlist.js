@@ -16,8 +16,6 @@ const YouTubePlaylist = ({ apiKey }) => {
   const playlistApi = location.state?.apidata;
   const playlistcategory = location.state?.category;
 
-  console.log(playlistcategory);
-  console.log(playlistapiitems);
 
   useEffect(() => {
     const fetchPlaylistItems = async (playlistId) => {
@@ -60,7 +58,7 @@ const YouTubePlaylist = ({ apiKey }) => {
         const data = response.data;
         setplaylistapiitems(data); // Update the state with the fetched courses
         setdbcategory(data.dbcategory);
-        console.log("datasdbcategory", data);
+        
       } catch (error) {
         console.error("Error fetching data:", error);
       }

@@ -11,7 +11,7 @@ const axios = require("axios");
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(email);
+
     // Check if the user with the provided email exists in the database
     const existingUser = await User.findOne({ email });
 
@@ -54,7 +54,7 @@ exports.loginUser = async (req, res) => {
         }
       });
 
-      console.log(process.env.HOST);
+ 
 
       const emailTemplatePath = path.join(__dirname, 'otp.html');
       let emailTemplate = fs.readFileSync(emailTemplatePath, 'utf-8');
@@ -95,7 +95,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
   } catch (err) {
-    console.log(err);
+
     res.status(500).json({ error: err.message });
   }
 };
@@ -134,7 +134,7 @@ exports.loginVerifyOTP = async (req, res) => {
 exports.googleLogin = async (req, res) => {
   try {
     const { accessToken } = req.body;
-console.log(accessToken);
+
     if (!accessToken) {
       return res.status(400).json({ message: "Missing access token!" });
     }
@@ -149,7 +149,7 @@ console.log(accessToken);
     const { given_name: name, family_name: lastName, email, picture } = response.data;
 
     const existingUser = await User.findOne({ email });
-    console.log(existingUser);
+ 
     if (!existingUser) {
       return res.status(404).json({ message: "User doesn't exist!" });
     }
@@ -241,7 +241,7 @@ exports.adminLoginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
   } catch (err) {
-    console.log(err);
+    
     res.status(500).json({ error: err.message });
   }
 };

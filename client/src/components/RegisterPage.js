@@ -89,7 +89,7 @@ export function RegisterPage() {
                 // Clear the form fields on successful registration
                 setFormData({ initialdata }); // Update this line
                 setMessage(usermessage)
-                console.log(usermessage);
+               
                 // setMessage("Registered Successfully!")
             } catch (error) {
                 // Handle registration error
@@ -105,7 +105,7 @@ export function RegisterPage() {
 
     async function handleGoogleLoginSuccess(tokenResponse) {
         const accessToken = tokenResponse.access_token;
-        console.log(accessToken);
+     
 
         try {
             const response = await fetch("/GoogleRegister", {

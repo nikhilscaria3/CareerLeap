@@ -24,7 +24,7 @@ const ProfilePage = () => {
   // Step 3: Extract the original loginUserData f const timestamp = decodedData.substring(0, 13); // Assuming the timestamp is 13 digits
   const jwtemail = decodedData.substring(13); // Extracting data after the timestamp
 
-  console.log("jwt", jwtemail);
+
 
   const [profileData, setProfileData] = useState({
     email: userData?.data || "",
@@ -46,7 +46,7 @@ const ProfilePage = () => {
   const [score, setScore] = useState(null)
   const [email, setemail] = useState(profileData.email)
   const [isVisible, setVisible] = useState(false)
-  console.log("email", email);
+
 
   const handleFileChange = (event) => {
     // Get the selected file from the input field
@@ -77,7 +77,7 @@ const ProfilePage = () => {
 
         });
         const data = response.data;
-        console.log("data gett", response.data);
+   
         setFile(response.data.profileimages)
         setemail(response.data.useremail)
         setuserresponseid(response.data.userid)
@@ -102,7 +102,7 @@ const ProfilePage = () => {
           params: { jwtemail }
         });
 
-        console.log("data gett", response.data);
+       
         setScore(response.data.score)
         // Do something with the data here, e.g., set it to a state variable
         // Example: setUserData(data);
@@ -133,7 +133,7 @@ const ProfilePage = () => {
         }
       });
 
-      console.log('File uploaded successfully:', response.data);
+
       setMessage(response.data.message)
       setFile(response.data.file)
 

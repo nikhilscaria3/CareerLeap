@@ -23,7 +23,7 @@ function DisplayQuestionAndAnswers() {
     try {
       const response = await axios.get('/userquestions');
       const data = response.data;
-      console.log(data);
+     
       setQuestions(data);
       setRealAnswers(data.map(question => question.answer));
     } catch (error) {
@@ -37,7 +37,7 @@ function DisplayQuestionAndAnswers() {
         params: { useremail: fumigationuseremail } // Use 'params' to send query parameters
       });
       const data = response.data;
-      console.log(data)
+     
       setUserAnswers(data[0]?.useranswers); // Extract useranswers array from the response
     } catch (error) {
       console.error('Error fetching user answers', error);

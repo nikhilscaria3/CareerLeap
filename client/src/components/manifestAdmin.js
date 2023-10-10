@@ -74,7 +74,7 @@ export function ManifestAdmin() {
 
                 const data = await response.json();
                 setManifest(data.manifest); // Update the state with the fetched courses
-                console.log("data", data);
+
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

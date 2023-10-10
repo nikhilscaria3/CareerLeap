@@ -15,7 +15,7 @@ function Chat() {
 
   useEffect(() => {
     socket.on('privateMessage', (data) => {
-      console.log('Received message:', data);
+    
       setMessages((prevMessages) => [...prevMessages, data]);
     });
   }, []);

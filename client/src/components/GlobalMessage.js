@@ -40,7 +40,7 @@ export function GlobalMessage() {
                 email: jwtemail,
                 adminemail: userEmailid
             });
-            console.log(response.data);
+            
             setMessage({ message: "" })
         } catch (error) {
             console.error("Error sending message:", error);
@@ -52,7 +52,7 @@ export function GlobalMessage() {
             try {
                 // Make sure to send the message inside an object with the appropriate key
                 const response = await axios.get(`/api/getglobalmessage`);
-                console.log("response", response.data);
+                
                 setresponsemesssage(response.data.message)
             } catch (error) {
                 console.error("Error sending message:", error);

@@ -5,7 +5,7 @@ exports.createTaskInfo = async (req, res) => {
   const { taskinfo, name } = req.body;
 
   if (!taskinfo) {
-    console.log("Error: No data received");
+  
     return res.status(400).json({ error: "No data received" });
   }
 

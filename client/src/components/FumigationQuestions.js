@@ -93,7 +93,7 @@ function DisplayQuestions() {
     try {
       const response = await axios.get('/questions');
       const data = response.data;
-      console.log(data);
+   
       setQuestions(data);
       setUserAnswers(new Array(data.length).fill(''));
     } catch (error) {
@@ -110,7 +110,7 @@ function DisplayQuestions() {
 
   const handleSubmitAnswers = async (e) => {
     e.preventDefault();
-    console.log(totalMarks);
+    
     try {
       // Calculate the total marks
       let totalMarks = 0;
@@ -120,7 +120,7 @@ function DisplayQuestions() {
         }
       }
 
-      console.log('Total Marks:', totalMarks);
+    
 
       // Submit user answers
       const answersResponse = await axios.post('/addAnswers', {
@@ -132,7 +132,7 @@ function DisplayQuestions() {
       });
 
       if (answersResponse.status === 200) {
-        console.log('Answers saved successfully');
+     
         setMessage("Response Submitted Successfully")
         // Update the totalMarks state
         setTotalMarks(totalMarks);
@@ -148,7 +148,7 @@ function DisplayQuestions() {
         });
 
         if (scoreResponse.status === 200) {
-          console.log('Score saved successfully');
+         
         } else {
           console.error('Error saving score');
         }

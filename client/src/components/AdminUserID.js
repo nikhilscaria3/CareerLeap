@@ -10,8 +10,7 @@ function AdminUserID() {
 
     // Here you can perform further actions like sending the data to an API
     // For this example, we'll just log the values to the console
-    console.log('Email:', email);
-    console.log('User ID:', userId);
+ 
 
     // Clear the form fields after submission
     setEmail('');

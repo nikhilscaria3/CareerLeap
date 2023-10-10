@@ -13,7 +13,6 @@ function AddQ2AndA() {
   const navigate = useNavigate()
 
   const userEmailid = getLoggedInEmailFromCookie();
-  console.log("adminemailuser", userEmailid);
 
   useEffect(() => {
       // Check for authentication
@@ -57,7 +56,7 @@ function AddQ2AndA() {
       });
 
       if (response.ok) {
-        console.log('Question and answer saved successfully');
+
         setQuestion('');
         setAnswer('');
       } else {

@@ -23,7 +23,7 @@ export function CreatePlaylists() {
         custom_error: null,
     });
 
-    console.log(inputs);
+   
 
 
     

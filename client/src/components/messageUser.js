@@ -67,7 +67,7 @@ export function UserMessage() {
             try {
                 // Make sure to send the message inside an object with the appropriate key
                 const response = await axios.get(`/api/getmessage/${email}`);
-                console.log("response", response.data);
+
                 setresponsemesssage(response.data.message)
                 setresponseemail(response.data.fromemail)
             } catch (error) {

@@ -94,7 +94,7 @@ const CoursePage = () => {
                 }
 
                 setCourses(response.data.course); // Update the state with the fetched courses
-                console.log("data", response.data);
+                
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -160,14 +160,14 @@ const CoursePage = () => {
     }, []);
 
     const handleEnroll = (playlistApi, category) => {
-        console.log(playlistApi);
+   
         setSelectedPlaylistApi(playlistApi);
-        console.log(category);
+       
         navigate('/playlist', { state: { apidata: playlistApi, category: category } }); // Navigate to the PlaylistPage
     };
 
     const handleEnrollBroto = (category) => {
-        console.log(category);
+      
         navigate('/BrotoPlaylist', { state: { category: category } }); // Navigate to the PlaylistPage
     };
 

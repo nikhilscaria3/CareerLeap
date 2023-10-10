@@ -15,7 +15,7 @@ const CountdownTimer = () => {
       const endDate = new Date();
       endDate.setDate(currentDate.getDate() + 7);
 
-      console.log(endDate);
+    
       // Get the number of days remaining until the end date
       const daysDiff = (endDate - currentDate) / (1000 * 60 * 60 * 24);
       const daysRemaining = Math.floor(daysDiff);

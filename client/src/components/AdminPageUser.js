@@ -83,7 +83,7 @@ export function AdminUserInfo() {
 
 
     const handleweeksave = async (email) => {
-        console.log("week", week.email);
+    
         try {
             // Make the POST request to update the user's data
             const response = await axios.post("/admin/userupdate", {
@@ -91,7 +91,7 @@ export function AdminUserInfo() {
                 week: week.email,
             });
 
-            console.log(response.data.message);
+           
             setMessage(response.data.message)
             setWeek(initialdata)
         } catch (error) {

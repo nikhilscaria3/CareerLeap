@@ -22,8 +22,7 @@ export default function AdminPage() {
     const dispatch = useDispatch();
     const data = useSelector((state) => state.courseadd);
     const userEmailid = getLoggedInEmailFromCookie();
-    console.log("adminemailuser", userEmailid);
-
+  
     useEffect(() => {
         // Check for authentication
         const isAuthenticated = !!localStorage.getItem("jwtAdminToken");
@@ -66,7 +65,7 @@ export default function AdminPage() {
 
                 const data = await response.json();
                 setCourses(data.course); // Update the state with the fetched courses
-                console.log("data", data);
+          
             } catch (error) {
                 console.error("Error fetching data:", error);
             }
@@ -167,8 +166,7 @@ export default function AdminPage() {
 
                 const data = await response.json();
                 setCourses(data.course); // Update the state with the fetched courses
-                console.log("data", data);
-
+             
                 // Clear the form fields after successful submission
                 setValues(initialFormState);
             } catch (error) {

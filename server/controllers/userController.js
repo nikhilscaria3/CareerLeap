@@ -56,7 +56,7 @@ exports.uploadUserProfileImage = async (req, res) => {
 // Get user data by email
 exports.getUserDataByEmail = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const user = await User.findOne({ email: id });
     if (!user) {
@@ -69,7 +69,7 @@ exports.getUserDataByEmail = async (req, res) => {
       userweek: user.week,
     });
   } catch (error) {
-    console.log(error);
+
     res.status(500).json({ message: 'Server Error' });
   }
 };
@@ -79,7 +79,7 @@ exports.getUserDataByEmail = async (req, res) => {
 // Get user score by email
 exports.getUserScoreByEmail = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
+
   try {
     const userscore = await User.findOne({ email: id });
     if (!userscore) {

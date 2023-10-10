@@ -36,7 +36,7 @@ const navigate = useNavigate();
       const response = await axios.get("/api/getTimerData");
       setStartTimestamp(response.startTimestamp);
       setDaysRemaining(response.remainingDays);
-      console.log("Timer data fetched from the backend!");
+
     } catch (error) {
       console.error("API Call Error:", error);
     }
@@ -71,7 +71,7 @@ const navigate = useNavigate();
         startTimestamp,
         daysRemaining,
       });
-      console.log("Timer data saved to the backend!");
+
     } catch (error) {
       console.error("API Call Error:", error);
     }
@@ -82,7 +82,7 @@ const navigate = useNavigate();
       try {
         const response = await axios.get(`/gettaskinfo/${taskweek}`);
         const taskInfoData = response.data;
-        console.log("taskInfoData", taskInfoData);
+      
         setTaskInfoData(taskInfoData);
       } catch (error) {
         console.error('API Call Error:', error);

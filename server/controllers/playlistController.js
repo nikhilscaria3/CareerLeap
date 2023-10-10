@@ -4,7 +4,7 @@ const { Playlist } = require('../models/userModel');
 exports.createPlaylist = async (req, res) => {
   try {
     const { category, link1, channel1, link2, channel2 } = req.body;
-    console.log(req.body);
+    
     const newPlaylist = new Playlist({
       category,
       link: [
@@ -22,7 +22,7 @@ exports.createPlaylist = async (req, res) => {
 
     res.status(201).json({ message: 'Link registered successfully' });
   } catch (err) {
-    console.log(err);
+ 
     res.status(500).json({ error: err.message });
   }
 };
@@ -31,9 +31,9 @@ exports.createPlaylist = async (req, res) => {
 exports.getPlaylistByCategory = async (req, res) => {
   try {
     const { id } = req.params;
-    console.log("id,,",id);
+   
     const playlists = await Playlist.find({ category: id });
-    console.log(playlists);
+   
     // Extract the 'link' array from all the playlists
     const allLinks = playlists.reduce((links, playlist) => {
       return links.concat(playlist.link);
@@ -51,7 +51,7 @@ exports.getPlaylistByCategory = async (req, res) => {
 exports.getAllPlaylists = async (req, res) => {
   try {
     const playlists = await Playlist.find({});
-    console.log(playlists);
+
     res.status(200).json({ dbcategory: playlists });
   } catch (err) {
     console.error(err);

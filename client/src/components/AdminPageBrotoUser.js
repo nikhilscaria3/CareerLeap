@@ -102,7 +102,7 @@ export function AdminUserInfo() {
                 week: week.email,
             });
 
-            console.log(response.data.message);
+          
             setMessage(response.data.message);
             setWeek(initialdata);
         } catch (error) {

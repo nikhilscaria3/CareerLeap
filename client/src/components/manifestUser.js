@@ -86,7 +86,7 @@ export function ManifestUser() {
                 }
 
                 setManifest(response.data.manifest); // Update the state with the fetched data
-                console.log("data", response.data);
+              
             } catch (error) {
                 console.error("Error fetching data:", error);
             }

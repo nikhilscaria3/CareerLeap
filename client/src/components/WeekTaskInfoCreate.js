@@ -17,8 +17,7 @@ export function WeekTaskInfoCreate() {
     setTaskInfo(value);
   };
 
-  console.log("Name:", name);
-  console.log("Task Info:", taskinfo);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +29,7 @@ export function WeekTaskInfoCreate() {
       });
 
       const data = response.data;
-      console.log("Task:", data);
+    
 
       // Assuming the response contains task information and you want to store it in the state
       setTaskInfo(data.description);

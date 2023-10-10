@@ -17,7 +17,7 @@ function ReceiverChat() {
 
   useEffect(() => {
     socket.on('privateMessage', (data) => {
-      console.log('Received message:', data);
+     
       setMessages((prevMessages) => [...prevMessages, data]);
     });
   }, []);
@@ -29,7 +29,7 @@ function ReceiverChat() {
           params: { email: jwtemail }
         });
         setMessages(response.data);
-        console.log(response.data);
+
         // Get unique admin emails from messages
         const uniqueAdmins = Array.from(new Set(response.data.map(msg => msg.senderEmail)));
         setAdmins(uniqueAdmins);

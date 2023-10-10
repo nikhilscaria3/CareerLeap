@@ -22,7 +22,7 @@ exports.getFumigationUsers = async (req, res) => {
 
 exports.updateUserWeek = async (req, res) => {
   const { email, week } = req.body;
-  console.log("data", req.body.email);
+ 
   try {
     const user = await User.findOne({ email: email });
 
@@ -42,7 +42,7 @@ exports.updateUserWeek = async (req, res) => {
 
 exports.updateUserId = async (req, res) => {
   const { email, userid } = req.body;
-  console.log("data", req.body.email);
+  
   try {
     const user = await User.findOne({ email: email })
 
