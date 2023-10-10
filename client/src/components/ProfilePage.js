@@ -122,7 +122,7 @@ const ProfilePage = () => {
     formData.append('file', selectedFile);
     formData.append('email', jwtemail)
     console.log(jwtemail);
-    console.log(formData);
+    console.log("formdata",formData);
     // Make an API call to upload the file to the server
     try {
      
