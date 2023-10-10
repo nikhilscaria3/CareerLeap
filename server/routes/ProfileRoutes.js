@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Upload a user profile image
-router.post('/api/upload', upload.single('file'), verifyToken, userController.uploadUserProfileImage);
+router.post('/api/upload', upload.single('file'), userController.uploadUserProfileImage);
 
 // Get user data by email
 router.get('/getuserdata/:id', verifyToken, userController.getUserDataByEmail);

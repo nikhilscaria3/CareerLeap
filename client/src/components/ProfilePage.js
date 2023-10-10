@@ -123,9 +123,8 @@ const ProfilePage = () => {
     formData.append('email', jwtemail)
     console.log(jwtemail);
     // Make an API call to upload the file to the server
-    const token = localStorage.getItem('jwtLoginToken');
     try {
-      setAuthToken(token);
+     
       // Make an API call to upload the file to the server
       const response = await axios.post('/api/upload', formData, {
         headers: {
