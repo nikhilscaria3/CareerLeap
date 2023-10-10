@@ -6,17 +6,10 @@ const path = require('path')
 const verifyToken = require('../auth.js');
 
 // Set up Multer for file uploads
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  },
-});
+const storage = multer.memoryStorage();
 
-const upload = multer({ storage });
+const upload = multer({ dest: 'uploads/' }); // Destination folder for uploaded files
+
 
 // Upload a user profile image
 router.post('/api/upload', upload.single('file'), userController.uploadUserProfileImage);
