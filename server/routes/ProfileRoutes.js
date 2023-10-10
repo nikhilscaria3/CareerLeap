@@ -8,7 +8,7 @@ const verifyToken = require('../auth.js');
 // Set up Multer for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, path.join(__dirname, 'uploads'));
   },
   filename: function(req, file, callback) {
     // Use the original file name with a timestamp to avoid naming conflicts
