@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
   week: {
     type: String
   },
+  imageUrl: {
+    type: String,
+  
+  },
+
   profileImage: {
     filepath: { type: String },
     filename: { type: String }

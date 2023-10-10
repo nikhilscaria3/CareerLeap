@@ -13,6 +13,7 @@ import { setAuthToken } from '../utils/api';
 const ProfilePage = () => {
   const location = useLocation();
   const navigate = useNavigate()
+  const [imageUrl, setImageUrl] = useState('');
   const userData = location.state?.data;
   const fileInputRef = useRef(null);
 
@@ -77,7 +78,7 @@ const ProfilePage = () => {
 
         });
         const data = response.data;
-
+        setImageUrl(response.data.imageUrl)
         setFile(response.data.profileimages)
         setemail(response.data.useremail)
         setuserresponseid(response.data.userid)
@@ -122,10 +123,9 @@ const ProfilePage = () => {
     formData.append('file', selectedFile);
     formData.append('email', jwtemail)
     console.log(jwtemail);
-    console.log("formdata",formData);
     // Make an API call to upload the file to the server
     try {
-     
+
       // Make an API call to upload the file to the server
       const response = await axios.post('/api/upload', formData, {
         headers: {
@@ -136,7 +136,7 @@ const ProfilePage = () => {
 
       setMessage(response.data.message)
       setFile(response.data.file)
-
+      setImageUrl(response.data.url);
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -217,7 +217,10 @@ const ProfilePage = () => {
                 <img src={URL.createObjectURL(selectedFile)} alt="Profile Pic" className="img-fluid rounded-circle" />
               ) : (
                 <img src={images} alt="No Profile" className="img-fluid rounded-circle" />
+
               )}
+             
+              {imageUrl && <img src={imageUrl} alt="Uploaded File" />}
             </div>
 
             {/* File Upload */}

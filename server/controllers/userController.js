@@ -1,54 +1,57 @@
 const { User, UserId } = require('../models/userModel');
 const path = require('path')
-
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp'];
 
+console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID);
+console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY);
 
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION,
+ credentials: {
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  }
+ 
+});
 
 // Upload a user profile image
 exports.uploadUserProfileImage = async (req, res) => {
   try {
+    const { email } = req.body;
 
     if (!req.file) {
-      console.log("not found the file")
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
-    console.log(req.file);
-    const { email } = req.body;
+    const params = {
+      Bucket: 'careerleap', // Replace with your S3 bucket name
+      Key: `${req.file.originalname}`, // Prefix the file name with userId or other unique identifier if needed
+      Body: req.file.buffer,
+    };
 
-    // Find the user in the database based on the provided email
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+
     const user = await User.findOne({ email });
 
     if (!user) {
-      console.log("user not found");
       return res.status(404).json({ error: 'User not found' });
     }
 
     const fileExtension = path.extname(req.file.originalname).toLowerCase();
 
-    // Check if the file extension is allowed
     if (!allowedExtensions.includes(fileExtension)) {
       return res.json({ message: 'Invalid image file type' });
     }
 
-    // Update the user's profileImage with the file details
-    user.profileImage = {
-      filepath: req.file.path,
-      filename: req.file.filename,
-    };
+    // Construct the image URL manually
+    const imageUrl = `https://careerleap.s3.eu-north-1.amazonaws.com/${req.file.originalname}`;
 
-    // Save the user with the updated profileImage in the database
+    user.imageUrl = imageUrl;
     await user.save();
 
-    const users = await User.find();
-
-    // Extract the profile images from each user
-    const images = users.map((user) => {
-      return user.profileImage.filepath;
-    });
-
-    res.json({ message: 'File uploaded and user updated successfully', file: req.file.filepath });
+    res.json({ message: 'File uploaded and user updated successfully', url: imageUrl });
   } catch (error) {
     console.error('Error updating user:', error);
     res.status(500).json({ error: 'Internal server error' });
@@ -68,6 +71,7 @@ exports.getUserDataByEmail = async (req, res) => {
     }
     res.status(200).json({
       profileimages: user.profileImage.filepath,
+      imageUrl:user.imageUrl,
       useremail: user.email,
       userid: user.userid,
       userweek: user.week,
