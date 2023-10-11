@@ -213,9 +213,7 @@ const CoursePage = () => {
                     <button onClick={navigateglobalnavigate}>
                         <FontAwesomeIcon icon={faGlobe} />
                     </button>
-                    <button onClick={handlemessage}>
-                        <FontAwesomeIcon icon={faBell} />
-                    </button>
+                  
                     <button onClick={handlenavigate}>
                         <FontAwesomeIcon icon={faUser} />
                     </button>

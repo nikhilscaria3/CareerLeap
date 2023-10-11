@@ -132,7 +132,7 @@ export function AdminUserInfo() {
 
 
     const realtimemessagenavigate = (email, name) => {
-        navigate('/ChatUser', { state: { useremail: email, username: name } })
+        navigate('/AdminChat', { state: { useremail: email, username: name } })
     }
 
 
@@ -210,7 +210,7 @@ export function AdminUserInfo() {
                             <th></th>
                             <th>Action</th>
                             <th>Manifest</th>
-                            <th>Chat Message</th>
+                         
                             {/* Add more table headings for other user details */}
                         </tr>
                     </thead>
@@ -237,7 +237,7 @@ export function AdminUserInfo() {
                                     </td>
                                     <td><button onClick={() => manifestnavigate(item.email, item.week)}>Manifest</button></td>
 
-                                    <td><button onClick={() => realtimemessagenavigate(item.email, item.name)}>Chat</button></td>
+
                                 </tr>
                             ))
                         )}
