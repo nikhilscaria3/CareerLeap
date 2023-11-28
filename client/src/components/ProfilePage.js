@@ -18,7 +18,7 @@ const ProfilePage = () => {
   const fileInputRef = useRef(null);
 
   const encodedData = localStorage.getItem("randomsession");
-
+  const username = localStorage.getItem("username")
   // Step 2: Decode the data using Base64
   const decodedData = atob(encodedData);
 
@@ -254,6 +254,7 @@ const ProfilePage = () => {
           <div className="user-info ml-4">
             <div className="user-card">
               <h2 className='nametagheading'>About</h2>
+              <p>Name: {username}</p>,
               {userData && userData.error && <p>{userData.error}</p>}
               {userData && userData.data ? (
                 <p>Email: {userData.data}</p>

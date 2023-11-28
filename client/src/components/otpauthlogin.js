@@ -92,6 +92,7 @@ const OTPForm = () => {
                 const expiration = Date.now() + 3 * 60 * 60 * 1000;
                 localStorage.setItem('jwtLoginToken', JSON.stringify({ token, expiration }));
                 localStorage.setItem('randomsession', encodedData);
+                localStorage.setItem("username", userData.username)
                 setMessage('OTP verification successful.');
 
                 // Navigate to the profile page on successful OTP verification

@@ -1,95 +1,116 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import '../styles/message.css'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import { useSelector } from "react-redux";
-import { getLoggedInEmailFromCookie } from '../cookieUtils'; // Adjust the import path according to your folder structure
-import { removeLoggedInEmailFromCookie } from '../cookieUtils';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useParams } from "react-router-dom";
+import io from 'socket.io-client';
+import axios from 'axios';
 
-export function GlobalMessage() {
-    const [message, setMessage] = useState("");
-    const [getmessage, setresponsemesssage] = useState([]);
-    const userEmailid = getLoggedInEmailFromCookie();
-    const encodedData = localStorage.getItem("randomsession");
+import '../styles/ChatComponent.css'; // Import the separate CSS file
 
-    // Step 2: Decode the data using Base64
-    const decodedData = atob(encodedData);
+const ENDPOINT = 'http://localhost:5000';
 
-    // Step 3: Extract the original loginUserData f const timestamp = decodedData.substring(0, 13); // Assuming the timestamp is 13 digits
-    const jwtemail = decodedData.substring(13); // Extracting data after the timestamp
+const ChatComponent = () => {
+    const [messages, setMessages] = useState([]);
+    const [messageContent, setMessageContent] = useState('');
+    const [socket, setSocket] = useState(null);
+    const userData = localStorage.getItem("username");
+    const { roomId } = useParams();
+    const messagesContainerRef = useRef(null);
+    const navigate = useNavigate();
 
+    useEffect(() => {
+        const socketInstance = io(ENDPOINT);
+        setSocket(socketInstance);
 
-    const [adminemail, setadminemail] = useState()
+        socketInstance.on('connect', () => {
+            console.log('Connected to server');
+        });
 
-    const handlechangemessage = (event) => {
-        // Extract the input value from the event object
-        const inputValue = event.target.value;
-        // Update the state using the functional update form
-        setMessage(inputValue);
-        setadminemail(localStorage.getItem("jwtAdminToken"))
-    };
+        socketInstance.on('chat message', (message) => {
+            console.log('Received message:', message);
+            setMessages((prevMessages) => [...prevMessages, message]);
+        });
 
-    const handlesendmessage = async () => {
-        try {
-            // Make sure to send the message inside an object with the appropriate key
-            const response = await axios.post("/api/setglobalmessage", {
-                message: message,
-                email: jwtemail,
-                adminemail: userEmailid
-            });
-            
-            setMessage({ message: "" })
-        } catch (error) {
-            console.error("Error sending message:", error);
+        socketInstance.on('error', (error) => {
+            console.error('Socket error:', error);
+        });
+
+        return () => {
+            console.log('Disconnecting socket');
+            socketInstance.disconnect();
+        };
+    }, []);
+
+    useEffect(() => {
+        // Scroll to the bottom when messages change
+        if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    const sendMessage = () => {
+        if (messageContent.trim() !== '') {
+            const messageObject = {
+                content: messageContent,
+                user: userData,
+                roomId: roomId,
+            };
+
+            socket.emit('chat message', messageObject);
+            setMessageContent('');
         }
     };
 
+    const handleLogout = () => {
+        localStorage.removeItem("name");
+        navigate("/");
+    };
+
     useEffect(() => {
-        const handlegetmessage = async () => {
+        const fetchData = async () => {
             try {
-                // Make sure to send the message inside an object with the appropriate key
-                const response = await axios.get(`/api/getglobalmessage`);
-                
-                setresponsemesssage(response.data.message)
+                const response = await axios.get("http://localhost:5000/messages");
+                const data = response.data;
+                if (data) {
+                    setMessages(data.data);
+                }
             } catch (error) {
-                console.error("Error sending message:", error);
+                console.error('Error retrieving messages:', error);
             }
         };
 
-        handlegetmessage()
-    }, [])
-    // ... (previous code)
+        fetchData();
+    }, []);
 
     return (
-        <div className="globalmessage-section">
-            <div className='realtimemessage-global-container'>
-                <div className="globalmessage-display">
-                    {getmessage.map((msg, index) => (
-                        <div key={index} className='received'>
-                            <strong>{msg.to}:<p>{msg.message}</p></strong>
-                            <div className='timestampcontainer'>
-                                <p className='timestamp'>{msg.timestamp}</p>
-                            </div>
+        <div>
+            <h1 className="user-header">{userData}</h1>
+            <div className='chatArea-container'>
+     
+                <div className='messages-container' ref={messagesContainerRef}>
+                    {messages.slice(0).reverse().map((message, index) => (
+                        <div key={index} className="message">
+                            <strong>{message.user}:</strong> {message.content}
+                            <p className='timestamp'>{new Date(message.createdAt).toLocaleDateString()} {new Date(message.createdAt).toLocaleTimeString()}</p>
                         </div>
                     ))}
                 </div>
 
-            </div>
-            <div className="globalinput-area">
-                <input
-                    type="text"
-                    value={message}
-                    onChange={handlechangemessage}
-                />
-                <button className="globalmessagebutton" onClick={handlesendmessage}>
-                    <FontAwesomeIcon icon={faPaperPlane} />
-
-                </button>
+                <div className='text-input-area'>
+                    <input
+                        className="form-control"
+                        placeholder='Type a Message'
+                        value={messageContent}
+                        onChange={(e) => setMessageContent(e.target.value)}
+                        onKeyDown={(event) => {
+                            if (event.code === 'Enter') {
+                                sendMessage();
+                            }
+                        }}
+                    />
+                    <button className="btn btn-primary" onClick={sendMessage}>Send</button>
+                </div>
             </div>
         </div>
     );
 };
 
+export default ChatComponent;

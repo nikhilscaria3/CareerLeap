@@ -1,0 +1,92 @@
+
+
+.chatArea-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0.7;
+  justify-content: center;
+  width: 800px;
+  max-height: 800px;
+  height: 700px;
+  margin-left: auto;
+  margin-right: auto;
+ }
+
+.messages-container {
+  display: flex;
+  flex-direction: column-reverse;
+  flex: 1;
+  background-color: white;
+  padding: 10px 10px;
+  margin: 10px;
+  border-radius: 20px;
+  overflow: scroll;
+  scrollbar-width: none;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.messages-container::-webkit-scrollbar {
+  display: none;
+}
+
+.messages-container::-webkit-scrollbar {
+  display: none;
+}
+
+.text-input-area {
+  background-color: white;
+  padding: 10px 10px;
+  margin: 10px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+
+.message {
+  background-color: #f0f0f0;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+.messages-container {
+  height: 400px;
+  overflow-y: scroll;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
+.message .timestamp {
+  font-size: 0.8em;
+  color: #777;
+  margin-top: 5px;
+}
+
+
+.text-input-area {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+/* Optional: Add some animations */
+.text-input-area input,
+.text-input-area button {
+  transition: all 0.3s ease;
+}
+
+.text-input-area input:focus {
+  border-color: #80bdff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.text-input-area button:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+

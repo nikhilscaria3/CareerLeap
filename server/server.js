@@ -11,10 +11,6 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
 const dotenv = require('dotenv');
 dotenv.config({ path: path.join(__dirname, "../server/config/config.env") });
-const http = require('http');
-const socketIO = require('socket.io');
-const server = http.createServer(app);
-const io = socketIO(server);
 
 
 app.use(bodyParser.json());
@@ -23,7 +19,8 @@ app.use(cors());
 
 app.use(session({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
+
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 
 
@@ -48,7 +45,7 @@ mongoose.connection.on('error', (err) => {
 });
 
 
-const { RealTimeMessage } = require('../server/models/userModel')
+const { Message } = require('../server/models/userModel')
 
 const userRoutes = require('./routes/userRoutes'); // Import the userRoutes file
 const LoginRoute = require('./routes/loginRoutes')
@@ -142,32 +139,58 @@ passport.deserializeUser(async (id, done) => {
 app.get('/auth/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
+const PORT = 5000;
+const server = app.listen(PORT, console.log(`Server is running on port ${PORT}`));
+
+
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "*"
+  },
+  pingTimeout: 60000
+})
+
+
+app.get('/messages', async (req, res) => {
+  try {
+
+    const messages = await Message.find();
+    res.json({ data: messages });
+  } catch (error) {
+    console.error('Error retrieving messages:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
 
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  socket.on('privateMessage', async (data) => {
-    console.log(data.message);
-    const message = new RealTimeMessage({
-      senderEmail: data.senderEmail,
-      recipientEmail: data.recipientEmail,
-      message: data.message,
-    });
+  // Handle chat messages
+  socket.on('chat message', async (message) => {
+    try {
+      // Save the new message to the database
+      const newMessage = new Message({
+        content: message.content,
+        user: message.user,
 
-    await message.save();
+      });
 
-    socket.emit('privateMessage', {
-      senderEmail: data.recipientEmail,
-      message: data.message,
-    });
+      const savedMessage = await newMessage.save();
 
+      // Emit the saved message to all connected clients
+      io.emit('chat message', savedMessage);
+
+    } catch (error) {
+      console.error('Error saving message:', error);
+    }
   });
 
+  // Handle disconnection
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    console.log('User disconnected');
   });
 });
-
 
 app.post('/execute-python', (req, res) => {
   const pythonCode = req.body.code;
@@ -210,10 +233,4 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.resolve(__dirname, '../client/build/index.html'))
   })
 }
-
-
-// Start the server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
 

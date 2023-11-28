@@ -183,29 +183,6 @@ const timerSchema = new mongoose.Schema({
   // Other fields...
 });
 
-const messageSchema = new mongoose.Schema({
-  from: {
-    type: String
-  },
-  to: {
-    type: String
-  },
-  message: {
-    type: String
-  }
-})
-
-const GlobalMessageSchema = new mongoose.Schema({
-  from: {
-    type: String
-  },
-  to: {
-    type: String
-  },
-  message: {
-    type: String
-  }
-})
 
 
 const questionSchema = new mongoose.Schema({
@@ -226,12 +203,7 @@ const userIdSchema = new mongoose.Schema({
 })
 
 
-const realtimemessageSchema = new mongoose.Schema({
-  senderEmail: String,
-  recipientEmail: String,
-  message: String,
-  timestamp: { type: Date, default: Date.now },
-});
+
 
 
 const progressSchema = new mongoose.Schema({
@@ -264,11 +236,31 @@ const enquirySchema = new mongoose.Schema({
   },
 });
 
+const messageSchema = new mongoose.Schema({
+  content: {
+    type: String,
+    required: true,
+  },
+  user: {
+    type: String,
+    required: true,
+  },
+  roomId: {
+    type: String,
+   
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+
 const Enquiry = mongoose.model('Enquiry', enquirySchema);
 
 
 const Progress = mongoose.model('Progress', progressSchema);
-const RealTimeMessage = mongoose.model('RealTimeMessage', realtimemessageSchema);
+
 const UserId = mongoose.model("usersid", userIdSchema)
 const fumigationanswers = mongoose.model('useranswers', userAnswerSchema);
 const Question = mongoose.model('Question', questionSchema);
@@ -281,9 +273,8 @@ const Admin = mongoose.model('Admin', adminSchema);
 // Create a Mongoose model using the schema
 const Manifest = mongoose.model('Manifest', manifestSchema);
 const Message = mongoose.model('Message', messageSchema);
-const GlobalMessage = mongoose.model('globalmessage', GlobalMessageSchema);
 
 const Pdf = mongoose.model('Pdf', pdfSchema);
 
 
-module.exports = { User, Enquiry,Progress, RealTimeMessage, UserId, fumigationanswers, Question, GlobalMessage, Pdf, Message, Timer, Playlist, Manifest, TaskInfo, Admin, CourseData };
+module.exports = { User, Enquiry,Progress, UserId, fumigationanswers, Question, Pdf, Message, Timer, Playlist, Manifest, TaskInfo, Admin, CourseData };
