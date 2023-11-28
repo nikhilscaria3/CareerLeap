@@ -22,14 +22,14 @@ import { UserMessage } from './components/messageUser';
 import JsCompiler from './components/jscompiler';
 import PDFUploader from './components/createPdf';
 import GetPdf from './components/getpdfuser';
-import { GlobalMessage } from './components/GlobalMessage';
+import ChatComponent, { GlobalMessage } from './components/GlobalMessage';
 import AddQ2AndA from './components/addquestionandans';
 import DisplayQuestions from './components/FumigationQuestions';
 import DisplayQuestionAndAnswers from './components/displayqnsAndans';
 import { AdminFumigationUserInfo } from './components/AdminPageFumigationUser';
 import ForgotPassword from './components/forgetUserPassword';
-import Chat from './components/ChatComponent';
-import ReceiverChat from './components/ReceiverChatComponent';
+import AdminChatComponent from './components/ChatComponent';
+import UserChatComponent from './components/ReceiverChatComponent';
 import PythonCompiler from './components/pythoncompiler';
 import CameraFeed from './components/camera';
 import OTPForm from './components/otpauthlogin';
@@ -37,6 +37,9 @@ import GoogleLogin from './components/GoogleLogin';
 import GoogleCallback from './components/GoogleCallback';
 import Elearning from './components/homepage';
 import { PrivateRoute, PrivateAdminRoute } from './components/PrivateRoutes';
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:5000'); // Initialize the socket connection
 
 function App() {
   const apiKey = 'AIzaSyCWCKu2TLYdXnMlNf0LsbsJfhXtEXenEhM';
@@ -65,7 +68,7 @@ function App() {
         <Route path="/admin/manifest" element={<PrivateAdminRoute component={ManifestAdmin} />} />
         <Route path="/admin/message" element={<PrivateAdminRoute component={Message} />} />
         <Route path="/Createpdf" element={<PrivateAdminRoute component={PDFUploader} />} />
-
+        <Route path="/AdminChat" element={<PrivateAdminRoute component={AdminChatComponent} socket={socket} userType="admin" />} />
         {/* User */}
 
         <Route
@@ -81,12 +84,12 @@ function App() {
         <Route path="/manifest" element={<PrivateRoute component={ManifestUser} />} />
         <Route path="/user/message" element={<PrivateRoute component={UserMessage} />} />
         <Route path="/jscompiler" element={<PrivateRoute component={JsCompiler} />} />
-        <Route path="/Global" element={<PrivateRoute component={GlobalMessage} />} />
+        <Route path="/Global" element={<PrivateRoute component={ChatComponent} />} />
         <Route path="/fumigationquestion" element={<PrivateRoute component={DisplayQuestions} />} />
         <Route path="/questionandanswers" element={<PrivateRoute component={DisplayQuestionAndAnswers} />} />
         <Route path="/pdf" element={<PrivateRoute component={GetPdf} />} />
-        <Route path="/ChatUser" element={<PrivateRoute component={Chat} />} />
-        <Route path="/Receiver" element={<PrivateRoute component={ReceiverChat} />} />
+
+        <Route path="/UserChat" element={<PrivateRoute component={UserChatComponent} socket={socket} userType="user" />} />
         <Route path="/PythonCompiler" element={<PrivateRoute component={PythonCompiler} />} />
         <Route path="/camera" element={<PrivateRoute component={CameraFeed} />} />
     
