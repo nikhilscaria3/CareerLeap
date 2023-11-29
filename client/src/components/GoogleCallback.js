@@ -14,6 +14,7 @@ const GoogleCallback = () => {
         if (response.data.success) {
           // Assuming you've stored the JWT token in local storage
           localStorage.setItem('jwtToken', response.data.token);
+          localStorage.setItem("username", response.data.username)
           // Redirect to the desired route (e.g., profile)
           navigate('/profile');
         } else {

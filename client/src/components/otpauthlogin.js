@@ -15,7 +15,7 @@ const OTPForm = () => {
     const [seconds, setSeconds] = useState(60);
     const [resendEnabled, setResendEnabled] = useState(false);
 
-   
+
     const handleOtpChange = (index, newValue) => {
         const newOtp = [...otp.toString()];
         newOtp[index] = newValue.toString();

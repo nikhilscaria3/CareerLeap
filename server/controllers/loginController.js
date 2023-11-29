@@ -54,7 +54,7 @@ exports.loginUser = async (req, res) => {
         }
       });
 
- 
+
 
       const emailTemplatePath = path.join(__dirname, 'otp.html');
       let emailTemplate = fs.readFileSync(emailTemplatePath, 'utf-8');
@@ -90,12 +90,12 @@ exports.loginUser = async (req, res) => {
 
       const success = "success"
 
-      return res.status(200).json({ message: 'User logged in successfully', data: existingUser.email, token, success });
+      return res.status(200).json({ message: 'User logged in successfully', data: existingUser.email, username: existingUser.name, token, success });
     } else {
       return res.status(401).json({ message: 'Invalid password' });
     }
   } catch (err) {
-
+  
     res.status(500).json({ error: err.message });
   }
 };
@@ -149,7 +149,7 @@ exports.googleLogin = async (req, res) => {
     const { given_name: name, family_name: lastName, email, picture } = response.data;
 
     const existingUser = await User.findOne({ email });
- 
+
     if (!existingUser) {
       return res.status(404).json({ message: "User doesn't exist!" });
     }
@@ -157,7 +157,7 @@ exports.googleLogin = async (req, res) => {
     const tokenPayload = { email: existingUser.email, userId: existingUser._id };
     const token = jwt.sign(tokenPayload, 'your_secret_key', { expiresIn: '8h' }); // Replace 'your_secret_key' with your own secret key
 
-    return res.status(200).json({ data: existingUser.email, token });
+    return res.status(200).json({ data: existingUser.email, username: existingUser.name, token });
   } catch (error) {
     console.error(error); // Log the error for debugging
     return res.status(400).json({ message: "Invalid access token or server error!" });
@@ -241,7 +241,7 @@ exports.adminLoginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid password' });
     }
   } catch (err) {
-    
+
     res.status(500).json({ error: err.message });
   }
 };

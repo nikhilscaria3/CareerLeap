@@ -254,7 +254,9 @@ const ProfilePage = () => {
           <div className="user-info ml-4">
             <div className="user-card">
               <h2 className='nametagheading'>About</h2>
-              <p>Name: {username}</p>,
+              {username && username ? (<p>Name: {username}</p>) : (
+                <p></p>
+              )},
               {userData && userData.error && <p>{userData.error}</p>}
               {userData && userData.data ? (
                 <p>Email: {userData.data}</p>

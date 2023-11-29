@@ -90,7 +90,7 @@ img {
   .user-profile {
     display: flex;
     justify-content: space-between;
-    align-items: start
+    align-items: flex-start
   }
 
   .user-info {
